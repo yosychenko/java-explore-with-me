@@ -1,5 +1,17 @@
 version: '3.1'
 services:
+  stats-gateway:
+    build: ./stats-service/stats-gateway
+    container_name: stats-gateway
+    ports:
+      - "8080:8080"
+    depends_on:
+      - stats-server
+    environment:
+      - STATS_SERVER_URL=http://stats-server:9090
+    volumes:
+      - ./logs:/stats-gateway-logs
+
   stats-server:
     build: ./stats-service/stats-server
     container_name: stats-server
