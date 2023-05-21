@@ -12,12 +12,16 @@ public class EndpointHit {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    @Column(nullable = false)
+
+    @Column(nullable = false, length = 512)
     private String app;
-    @Column(nullable = false)
+
+    @Column(nullable = false, length = 1024)
     private String uri;
-    @Column(nullable = false)
+
+    @Column(nullable = false, length = 45)
     private String ip;
+
     @Column(nullable = false)
     private LocalDateTime timestamp;
 }

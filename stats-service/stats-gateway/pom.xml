@@ -46,6 +46,12 @@
         </dependency>
 
         <dependency>
+            <groupId>org.zalando</groupId>
+            <artifactId>logbook-core</artifactId>
+            <version>3.0.0</version>
+        </dependency>
+
+        <dependency>
             <groupId>ru.practicum.stats</groupId>
             <artifactId>stats-contract</artifactId>
             <version>0.0.1-SNAPSHOT</version>

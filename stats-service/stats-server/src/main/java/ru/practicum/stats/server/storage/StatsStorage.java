@@ -11,17 +11,34 @@ import java.util.List;
 public interface StatsStorage extends JpaRepository<EndpointHit, Long> {
     @Query(
             "SELECT new ru.practicum.stats.dto.EndpointHitStatsDto(h.app, h.uri, COUNT(h.ip)) " +
-            "FROM EndpointHit h " +
-            "WHERE h.uri in :uris AND timestamp BETWEEN :start AND :end " +
-            "GROUP BY h.app, h.uri"
+                    "FROM EndpointHit h " +
+                    "WHERE h.uri in :uris AND timestamp BETWEEN :start AND :end " +
+                    "GROUP BY h.app, h.uri"
     )
-    List<EndpointHitStatsDto> findAllHits(List<String> uris, LocalDateTime start, LocalDateTime end);
+    List<EndpointHitStatsDto> findAllHitsByUri(List<String> uris, LocalDateTime start, LocalDateTime end);
+
+    @Query(
+            "SELECT new ru.practicum.stats.dto.EndpointHitStatsDto(h.app, h.uri, COUNT(h.ip)) " +
+                    "FROM EndpointHit h " +
+                    "WHERE timestamp BETWEEN :start AND :end " +
+                    "GROUP BY h.app, h.uri"
+    )
+    List<EndpointHitStatsDto> findAllHits(LocalDateTime start, LocalDateTime end);
 
     @Query(
             "SELECT new ru.practicum.stats.dto.EndpointHitStatsDto(h.app, h.uri, COUNT(DISTINCT h.ip)) " +
-            "FROM EndpointHit h " +
-            "WHERE h.uri in :uris AND timestamp BETWEEN :start AND :end " +
-            "GROUP BY h.app, h.uri"
+                    "FROM EndpointHit h " +
+                    "WHERE h.uri in :uris AND timestamp BETWEEN :start AND :end " +
+                    "GROUP BY h.app, h.uri"
     )
-    List<EndpointHitStatsDto> findUniqueHits(List<String> uris, LocalDateTime start, LocalDateTime end);
+    List<EndpointHitStatsDto> findUniqueHitsByUri(List<String> uris, LocalDateTime start, LocalDateTime end);
+
+    @Query(
+            "SELECT new ru.practicum.stats.dto.EndpointHitStatsDto(h.app, h.uri, COUNT(DISTINCT h.ip)) " +
+                    "FROM EndpointHit h " +
+                    "WHERE timestamp BETWEEN :start AND :end " +
+                    "GROUP BY h.app, h.uri"
+    )
+    List<EndpointHitStatsDto> findAllUniqueHits(LocalDateTime start, LocalDateTime end);
+
 }

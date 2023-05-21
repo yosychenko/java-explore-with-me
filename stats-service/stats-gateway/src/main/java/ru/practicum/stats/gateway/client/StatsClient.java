@@ -25,8 +25,8 @@ public class StatsClient extends BaseClient {
         );
     }
 
-    public void createEndpointHit(EndpointHitDto endpointHitDto) {
-        post("/hit", endpointHitDto);
+    public ResponseEntity<Object> createEndpointHit(EndpointHitDto endpointHitDto) {
+        return post("/hit", endpointHitDto);
     }
 
     public ResponseEntity<Object> getStats(
@@ -35,8 +35,10 @@ public class StatsClient extends BaseClient {
             LocalDateTime end,
             boolean unique
     ) {
+
+
         Map<String, Object> parameters = Map.of(
-                "uris", uris,
+                "uris", String.join(", ", uris),
                 "start", start,
                 "end", end,
                 "unique", unique

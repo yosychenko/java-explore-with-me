@@ -24,8 +24,18 @@ public class StatsServiceImpl implements StatsService {
     @Override
     public List<EndpointHitStatsDto> getStats(List<String> uris, LocalDateTime start, LocalDateTime end, boolean unique) {
         if (unique) {
-            return statsStorage.findUniqueHits(uris, start, end);
+            if (!uris.isEmpty()) {
+                return statsStorage.findUniqueHitsByUri(uris, start, end);
+            } else {
+                return statsStorage.findAllUniqueHits(start, end);
+            }
+
+        } else {
+            if (!uris.isEmpty()) {
+                return statsStorage.findAllHitsByUri(uris, start, end);
+            } else {
+                return statsStorage.findAllHits(start, end);
+            }
         }
-        return statsStorage.findAllHits(uris, start, end);
     }
 }
