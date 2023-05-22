@@ -27,8 +27,8 @@ public class StatsGatewayController {
     @GetMapping("/stats")
     public ResponseEntity<Object> getStats(
             @RequestParam(required = false, defaultValue = "") List<String> uris,
-            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime start,
-            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime end,
+            @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") LocalDateTime start,
+            @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") LocalDateTime end,
             @RequestParam(required = false, defaultValue = "false") boolean unique
     ) {
         if (start.isAfter(end)) {
