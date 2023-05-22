@@ -30,7 +30,7 @@ public class StatsController {
     @GetMapping("/stats")
     public List<EndpointHitStatsDto> getStats(
             @RequestParam List<String> uris,
-            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime start ,
+            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime start,
             @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime end,
             @RequestParam boolean unique
     ) {

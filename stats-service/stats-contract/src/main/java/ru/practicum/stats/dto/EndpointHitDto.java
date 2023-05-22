@@ -4,6 +4,7 @@ import lombok.Builder;
 import lombok.Data;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
 
@@ -21,5 +22,7 @@ public class EndpointHitDto {
     @NotBlank(message = "IP-адрес не должен быть пустым.")
     @Size(max = 45, message = "IP-адреc не должен превышать 45 символов.")
     private String ip;
+
+    @NotNull(message = "Дата и время посещения не должны быть пустыми.")
     private LocalDateTime timestamp;
 }
