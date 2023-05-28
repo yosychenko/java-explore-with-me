@@ -12,6 +12,6 @@ import java.util.List;
 @Data
 @Builder
 public class EventRequestStatusUpdateRequest {
-    private List<Long> requestIds ;
-    private EventStatus status ;
+    private List<Long> requestIds;
+    private EventStatus status;
 }

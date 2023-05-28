@@ -15,7 +15,7 @@ import java.time.LocalDateTime;
 @Builder
 public class NewEventDto {
     @NotBlank(message = "Краткое описание события не должно быть пустым.")
-    @Size(min = 20, max = 2000, message = "Краткое описание события должно быть длиной от 20 до 2000 символов." )
+    @Size(min = 20, max = 2000, message = "Краткое описание события должно быть длиной от 20 до 2000 символов.")
     private String annotation;
     private long category;
     @NotBlank(message = "Описание события не должно быть пустым.")
