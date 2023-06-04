@@ -1,9 +1,10 @@
-package ru.practicum.ewm.event.model;
+package ru.practicum.ewm.request.model;
 
 /**
  * Новый статус запроса на участие в событии текущего пользователя
  */
-public enum EventStatus {
+public enum ParticipationRequestStatus {
     CONFIRMED,
-    REJECTED
+    REJECTED,
+    PENDING
 }

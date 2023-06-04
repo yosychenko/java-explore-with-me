@@ -27,7 +27,6 @@ public class AdminCategoriesController {
     @DeleteMapping("/{catId}")
     @ResponseStatus(code = HttpStatus.NO_CONTENT)
     public void deleteCategory(@PathVariable long catId) {
-        // TODO: добавить проверку на связь с любым event, если есть - не удалять событие, ошибка 409
         categoriesService.deleteCategory(catId);
     }
 

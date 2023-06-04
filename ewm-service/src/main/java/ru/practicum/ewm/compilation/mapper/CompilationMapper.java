@@ -23,12 +23,12 @@ public class CompilationMapper {
                 .build();
     }
 
-    public static Compilation fromCompilationDto(CompilationDto compilationDto, List<EventFullDto> eventFullDtos) {
+    public static Compilation fromCompilationDto(CompilationDto compilationDto) {
         Compilation compilation = new Compilation();
         compilation.setId(compilationDto.getId());
-        compilation.setPinned(compilation.isPinned());
-        compilation.setTitle(compilation.getTitle());
-        compilation.setEvents(eventFullDtos.stream().map(EventMapper::fromEventFullDto).collect(Collectors.toSet()));
+        compilation.setPinned(compilationDto.isPinned());
+        compilation.setTitle(compilationDto.getTitle());
+        compilation.setEvents(compilationDto.getEvents().stream().map(EventMapper::fromEventShortDto).collect(Collectors.toSet()));
         return compilation;
     }
 

@@ -6,9 +6,7 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
-import ru.practicum.ewm.exception.DuplicateEntityException;
-import ru.practicum.ewm.exception.EntityNotFoundException;
-import ru.practicum.ewm.exception.EventsOfDeletedCategoryExistException;
+import ru.practicum.ewm.exception.*;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -27,13 +25,13 @@ public class ExceptionControllerAdvice {
         return errors;
     }
 
-    @ExceptionHandler(EventsOfDeletedCategoryExistException.class)
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public Map<String, String> handleBadRequestExceptions(RuntimeException ex) {
-        return Map.of("message", ex.getMessage());
-    }
-
-    @ExceptionHandler(DuplicateEntityException.class)
+    @ExceptionHandler({
+            DuplicateEntityException.class,
+            EventsOfDeletedCategoryExistException.class,
+            IncorrectEventStateAction.class,
+            UserCannotParticipateInEventException.class,
+            UserCannotCancelRequestException.class
+    })
     @ResponseStatus(HttpStatus.CONFLICT)
     public Map<String, String> handleConflictExceptions(RuntimeException ex) {
         return Map.of("message", ex.getMessage());

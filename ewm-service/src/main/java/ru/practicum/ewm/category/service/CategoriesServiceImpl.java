@@ -1,8 +1,8 @@
 package ru.practicum.ewm.category.service;
 
-import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.dao.DuplicateKeyException;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,10 +22,15 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
-@RequiredArgsConstructor
 public class CategoriesServiceImpl implements CategoriesService {
     private final CategoryStorage categoryStorage;
     private final EventService eventService;
+
+    @Autowired
+    public CategoriesServiceImpl(CategoryStorage categoryStorage, @Lazy EventService eventService) {
+        this.categoryStorage = categoryStorage;
+        this.eventService = eventService;
+    }
 
     @Override
     public CategoryDto addCategory(NewCategoryDto newCategoryDto) {

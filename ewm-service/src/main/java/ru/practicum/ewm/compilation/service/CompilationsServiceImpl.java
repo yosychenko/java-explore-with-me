@@ -10,11 +10,14 @@ import ru.practicum.ewm.compilation.mapper.CompilationMapper;
 import ru.practicum.ewm.compilation.model.Compilation;
 import ru.practicum.ewm.compilation.storage.CompilationStorage;
 import ru.practicum.ewm.event.dto.EventFullDto;
+import ru.practicum.ewm.event.mapper.EventMapper;
+import ru.practicum.ewm.event.model.Event;
 import ru.practicum.ewm.event.service.EventService;
 import ru.practicum.ewm.exception.EntityNotFoundException;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
@@ -60,10 +63,28 @@ public class CompilationsServiceImpl implements CompilationsService {
 
     @Override
     public CompilationDto updateCompilation(long compId, UpdateCompilationRequest updateCompilationRequest) {
-        // TODO: Брать подборку из БД
-        List<EventFullDto> eventsDtos = eventService.getEventsByIds(updateCompilationRequest.getEvents());
-        Compilation compilation = CompilationMapper.fromCompilationDto(getCompilationById(compId), eventsDtos);
+        Compilation compilationToUpdate = CompilationMapper.fromCompilationDto(getCompilationById(compId));
 
-        return CompilationMapper.toCompilationDto(compilationStorage.save(compilation));
+        if (!updateCompilationRequest.getEvents().isEmpty()) {
+            Set<Event> events = eventService.getEventsByIds(updateCompilationRequest.getEvents()).stream()
+                    .map(EventMapper::fromEventFullDto)
+                    .collect(Collectors.toSet());
+
+            if (events.isEmpty()) {
+                throw new EntityNotFoundException("Указанные события не найдены.");
+            }
+
+            compilationToUpdate.setEvents(events);
+        }
+
+        if (updateCompilationRequest.getTitle() != null) {
+            compilationToUpdate.setTitle(updateCompilationRequest.getTitle());
+        }
+
+        if (updateCompilationRequest.getPinned() != null) {
+            compilationToUpdate.setPinned(updateCompilationRequest.getPinned());
+        }
+
+        return CompilationMapper.toCompilationDto(compilationStorage.save(compilationToUpdate));
     }
 }
