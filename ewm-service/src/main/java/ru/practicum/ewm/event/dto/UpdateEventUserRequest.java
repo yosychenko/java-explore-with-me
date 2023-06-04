@@ -1,7 +1,9 @@
 package ru.practicum.ewm.event.dto;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import ru.practicum.ewm.event.model.EventStateAction;
 
 import javax.validation.constraints.Size;
@@ -13,6 +15,8 @@ import java.time.LocalDateTime;
  */
 @Data
 @Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class UpdateEventUserRequest {
     @Size(min = 20, max = 2000, message = "Краткое описание события должно быть длиной от 20 до 2000 символов.")
     private String annotation;

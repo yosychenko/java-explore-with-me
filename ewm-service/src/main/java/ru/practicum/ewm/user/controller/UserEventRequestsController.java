@@ -51,7 +51,7 @@ public class UserEventRequestsController {
         return null;
     }
 
-    @GetMapping("/{userId}/events/{eventId}/requests")
+    @PatchMapping("/{userId}/events/{eventId}/requests")
     public EventRequestStatusUpdateResult updateUserEventParticipationRequestStatus(
             @PathVariable long userId,
             @PathVariable long eventId,

@@ -1,16 +1,17 @@
 package ru.practicum.ewm.user.service;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import ru.practicum.ewm.exception.DuplicateEntityException;
 import ru.practicum.ewm.exception.EntityNotFoundException;
-import ru.practicum.ewm.user.UserStorage;
 import ru.practicum.ewm.user.dto.NewUserRequest;
 import ru.practicum.ewm.user.dto.UserDto;
 import ru.practicum.ewm.user.mapper.UserMapper;
 import ru.practicum.ewm.user.model.User;
+import ru.practicum.ewm.user.storage.UserStorage;
 
 import java.util.List;
 import java.util.Optional;
@@ -45,8 +46,8 @@ public class UserServiceImpl implements UserService {
         try {
             User addedUser = userStorage.save(user);
             return UserMapper.toUserDto(addedUser);
-        } catch (DuplicateKeyException ex) {
-            throw new DuplicateEntityException(user.getEmail());
+        } catch (DataIntegrityViolationException ex) {
+            throw new DuplicateEntityException(String.format("Пользователь с email=%s уже существует.", user.getEmail()));
         }
     }
 

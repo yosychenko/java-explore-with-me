@@ -1,7 +1,9 @@
 package ru.practicum.ewm.user.dto;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
@@ -12,6 +14,8 @@ import javax.validation.constraints.Size;
  */
 @Data
 @Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class NewUserRequest {
     @Email(message = "Email имеет некорректный формат.")
     @NotBlank(message = "Email должен быть заполнен.")

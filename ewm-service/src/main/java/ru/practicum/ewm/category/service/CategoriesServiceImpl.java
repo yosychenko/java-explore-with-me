@@ -1,16 +1,21 @@
 package ru.practicum.ewm.category.service;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ru.practicum.ewm.category.dto.CategoryDto;
 import ru.practicum.ewm.category.dto.NewCategoryDto;
 import ru.practicum.ewm.category.mapper.CategoryMapper;
 import ru.practicum.ewm.category.model.Category;
 import ru.practicum.ewm.category.storage.CategoryStorage;
+import ru.practicum.ewm.event.dto.EventFullDto;
+import ru.practicum.ewm.event.service.EventService;
 import ru.practicum.ewm.exception.DuplicateEntityException;
 import ru.practicum.ewm.exception.EntityNotFoundException;
+import ru.practicum.ewm.exception.EventsOfDeletedCategoryExistException;
 
 import java.util.List;
 import java.util.Optional;
@@ -20,30 +25,37 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class CategoriesServiceImpl implements CategoriesService {
     private final CategoryStorage categoryStorage;
+    private final EventService eventService;
 
     @Override
     public CategoryDto addCategory(NewCategoryDto newCategoryDto) {
         Category category = CategoryMapper.fromNewCategoryDto(newCategoryDto);
         try {
             return CategoryMapper.toCategoryDto(categoryStorage.save(category));
-        } catch (DuplicateKeyException ex) {
+        } catch (DataIntegrityViolationException ex) {
             throw new DuplicateEntityException(String.format("Категория c name=%s уже существует.", category.getName()));
         }
     }
 
     @Override
+    @Transactional
     public void deleteCategory(long catId) {
         CategoryDto categoryToDelete = getCategoryById(catId);
-        categoryStorage.deleteById(categoryToDelete.getId());
+        List<EventFullDto> eventsOfThisCategory = eventService.getEventsByCategoryId(categoryToDelete.getId());
+        if (eventsOfThisCategory.isEmpty()) {
+            categoryStorage.deleteById(categoryToDelete.getId());
+        } else {
+            throw new EventsOfDeletedCategoryExistException(catId);
+        }
     }
 
     @Override
     public CategoryDto updateCategory(long catId, CategoryDto categoryDto) {
-        getCategoryById(catId);
-        Category updatedCategory = CategoryMapper.fromCategoryDto(categoryDto);
+        Category categoryToUpdate = CategoryMapper.fromCategoryDto(getCategoryById(catId));
+        categoryToUpdate.setName(categoryDto.getName());
         try {
-            return CategoryMapper.toCategoryDto(categoryStorage.save(updatedCategory));
-        } catch (DuplicateKeyException ex) {
+            return CategoryMapper.toCategoryDto(categoryStorage.save(categoryToUpdate));
+        } catch (DataIntegrityViolationException ex) {
             throw new DuplicateEntityException(String.format("Категория c name=%s уже существует.", categoryDto.getName()));
         }
     }

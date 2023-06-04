@@ -1,6 +1,7 @@
 package ru.practicum.ewm.event.service;
 
 import org.springframework.data.domain.Pageable;
+import ru.practicum.ewm.category.model.Category;
 import ru.practicum.ewm.event.dto.EventFullDto;
 import ru.practicum.ewm.event.dto.EventShortDto;
 import ru.practicum.ewm.event.dto.UpdateEventAdminRequest;
@@ -25,6 +26,8 @@ public interface EventService {
     EventFullDto getEventById(Long id);
 
     List<EventFullDto> getEventsByIds(List<Long> eventIds);
+
+    List<EventFullDto> getEventsByCategoryId(long catId);
 
     List<EventFullDto> getEvents(
             List<Long> users,

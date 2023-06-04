@@ -3,6 +3,7 @@ package ru.practicum.ewm.event.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import ru.practicum.ewm.category.model.Category;
 import ru.practicum.ewm.event.dto.EventFullDto;
 import ru.practicum.ewm.event.dto.EventShortDto;
 import ru.practicum.ewm.event.dto.UpdateEventAdminRequest;
@@ -39,9 +40,18 @@ public class EventServiceImpl implements EventService {
         return null;
     }
 
+
+
     @Override
     public List<EventFullDto> getEventsByIds(List<Long> eventIds) {
         return eventStorage.findAllById(eventIds).stream()
+                .map(EventMapper::toEventFullDto)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<EventFullDto> getEventsByCategoryId(long catId) {
+        return eventStorage.findAllByCategoryId(catId).stream()
                 .map(EventMapper::toEventFullDto)
                 .collect(Collectors.toList());
     }

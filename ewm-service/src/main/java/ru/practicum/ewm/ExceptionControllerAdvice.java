@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import ru.practicum.ewm.exception.DuplicateEntityException;
 import ru.practicum.ewm.exception.EntityNotFoundException;
+import ru.practicum.ewm.exception.EventsOfDeletedCategoryExistException;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -26,9 +27,15 @@ public class ExceptionControllerAdvice {
         return errors;
     }
 
+    @ExceptionHandler(EventsOfDeletedCategoryExistException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public Map<String, String> handleBadRequestExceptions(RuntimeException ex) {
+        return Map.of("message", ex.getMessage());
+    }
+
     @ExceptionHandler(DuplicateEntityException.class)
     @ResponseStatus(HttpStatus.CONFLICT)
-    public Map<String, String> handleBadRequestExceptions(RuntimeException ex) {
+    public Map<String, String> handleConflictExceptions(RuntimeException ex) {
         return Map.of("message", ex.getMessage());
     }
 
