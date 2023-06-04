@@ -1,8 +1,8 @@
-package ru.practicum.ewm.user.controller;
+package ru.practicum.ewm.request.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
-import ru.practicum.ewm.event.dto.ParticipationRequestDto;
+import ru.practicum.ewm.request.dto.ParticipationRequestDto;
 
 import java.util.List;
 

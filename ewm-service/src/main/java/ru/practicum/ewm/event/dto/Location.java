@@ -2,6 +2,7 @@ package ru.practicum.ewm.event.dto;
 
 import lombok.Data;
 
+import javax.persistence.Embeddable;
 import javax.validation.constraints.NotBlank;
 
 /**
@@ -9,6 +10,7 @@ import javax.validation.constraints.NotBlank;
  */
 @Data
 @NotBlank
+@Embeddable
 public class Location {
     private float lat;
     private float lon;

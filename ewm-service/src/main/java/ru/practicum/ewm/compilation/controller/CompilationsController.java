@@ -1,8 +1,10 @@
 package ru.practicum.ewm.compilation.controller;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.web.bind.annotation.*;
 import ru.practicum.ewm.compilation.dto.CompilationDto;
+import ru.practicum.ewm.compilation.service.CompilationsService;
 
 import java.util.List;
 
@@ -13,18 +15,20 @@ import java.util.List;
 @RequestMapping("/compilations")
 @RequiredArgsConstructor
 public class CompilationsController {
+    private final CompilationsService compilationsService;
+
     @GetMapping
     public List<CompilationDto> getCompilations(
             @RequestParam(required = false) Boolean pinned,
             @RequestParam(defaultValue = "0") int from,
             @RequestParam(defaultValue = "10") int size
     ) {
-        return null;
+        return compilationsService.getCompilations(pinned, PageRequest.of(from, size));
     }
 
     @GetMapping("/{compId}")
     public CompilationDto getCompilationById(@PathVariable long compId) {
-        return null;
+        return compilationsService.getCompilationById(compId);
     }
 
 }

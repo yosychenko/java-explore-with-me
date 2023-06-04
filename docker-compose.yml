@@ -1,17 +1,5 @@
 version: '3.1'
 services:
-  stats-gateway:
-    build: ./stats-service/stats-gateway
-    container_name: stats-gateway
-    ports:
-      - "9090:9090"
-    depends_on:
-      - stats-server
-    environment:
-      - STATS_SERVER_URL=http://stats-server:8080
-    volumes:
-      - ./logs:/stats-gateway-logs
-
   stats-server:
     build: ./stats-service/stats-server
     container_name: stats-server
@@ -37,9 +25,29 @@ services:
       - POSTGRES_USER=stats-service-root
       - POSTGRES_PASSWORD=stats-service-root
 
-#  ewm-service:
-#    ports:
-#      - "8080:8080"
+  ewm-service:
+    build: ./ewm-service
+    container_name: ewm-service
+    ports:
+      - "9090:9090"
+    depends_on:
+      - ewm-db
+      - stats-server
+    environment:
+      - STATS_SERVER_URL=http://stats-server:8080
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://ewm-db:5432/ewm-service-db
+      - POSTGRES_DB=ewm-service-db
+      - POSTGRES_USER=ewm-service-root
+      - POSTGRES_PASSWORD=ewm-service-root
+    volumes:
+      - ./logs:/ewm-service-logs
 
-#  ewm-db:
-#    image: postgres:14-alpine
+  ewm-db:
+    image: postgres:14-alpine
+    container_name: ewm-db
+    ports:
+      - "6542:5432"
+    environment:
+      - POSTGRES_DB=ewm-service-db
+      - POSTGRES_USER=ewm-service-root
+      - POSTGRES_PASSWORD=ewm-service-root

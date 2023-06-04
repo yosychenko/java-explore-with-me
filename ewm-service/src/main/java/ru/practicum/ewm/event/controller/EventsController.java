@@ -1,10 +1,13 @@
 package ru.practicum.ewm.event.controller;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.web.bind.annotation.*;
 import ru.practicum.ewm.event.dto.EventFullDto;
 import ru.practicum.ewm.event.dto.EventShortDto;
 import ru.practicum.ewm.event.model.EventSortType;
+import ru.practicum.ewm.event.service.EventService;
+import ru.practicum.stats.gateway.client.StatsClient;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -16,6 +19,9 @@ import java.util.List;
 @RequestMapping("/events")
 @RequiredArgsConstructor
 public class EventsController {
+    private final EventService eventService;
+    private final StatsClient statsClient;
+
     @GetMapping
     public List<EventShortDto> getEvents(
             @RequestParam String text,
@@ -28,11 +34,11 @@ public class EventsController {
             @RequestParam(defaultValue = "0") int from,
             @RequestParam(defaultValue = "10") int size
     ) {
-        return null;
+        return eventService.getEvents(text, categories, paid, rangeStart, rangeEnd, onlyAvailable, sort, PageRequest.of(from, size));
     }
 
     @GetMapping("/{id}")
     public EventFullDto getEventById(@PathVariable Long id) {
-        return null;
+        return eventService.getEventById(id);
     }
 }

@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import ru.practicum.ewm.category.dto.CategoryDto;
 import ru.practicum.ewm.category.dto.NewCategoryDto;
+import ru.practicum.ewm.category.service.CategoriesService;
 
 import javax.validation.Valid;
 
@@ -14,14 +15,17 @@ import javax.validation.Valid;
 @RequestMapping("/admin/categories")
 @RequiredArgsConstructor
 public class AdminCategoriesController {
+    private final CategoriesService categoriesService;
+
     @PostMapping
     public CategoryDto addCategory(@Valid @RequestBody NewCategoryDto newCategoryDto) {
-        return null;
+        return categoriesService.addCategory(newCategoryDto);
     }
 
     @DeleteMapping("/{catId}")
     public void deleteCategory(@PathVariable long catId) {
-
+        // TODO: добавить проверку на связь с любым event, если есть - не удалять событие, ошибка 409
+        categoriesService.deleteCategory(catId);
     }
 
     @PatchMapping("/{catId}")
@@ -29,6 +33,6 @@ public class AdminCategoriesController {
             @PathVariable long catId,
             @Valid @RequestBody CategoryDto categoryDto
     ) {
-        return null;
+        return categoriesService.updateCategory(catId, categoryDto);
     }
 }
