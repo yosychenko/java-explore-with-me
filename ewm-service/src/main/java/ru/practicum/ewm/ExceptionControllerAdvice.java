@@ -13,7 +13,7 @@ import java.util.Map;
 
 @RestControllerAdvice
 public class ExceptionControllerAdvice {
-    private final String EXCEPTION_MESSAGE_FIELD = "message";
+    private static final String EXCEPTION_MESSAGE_FIELD = "message";
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
