@@ -31,8 +31,8 @@ public class StatsClient extends BaseClient {
 
     public ResponseEntity<Object> getStats(
             List<String> uris,
-            LocalDateTime start,
-            LocalDateTime end,
+            String start,
+            String end,
             boolean unique
     ) {
 

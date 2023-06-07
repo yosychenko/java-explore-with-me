@@ -1,7 +1,7 @@
 package ru.practicum.ewm.request.model;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.DynamicUpdate;
 import ru.practicum.ewm.event.model.Event;
 import ru.practicum.ewm.user.model.User;
@@ -18,12 +18,16 @@ import java.time.LocalDateTime;
 )
 @Getter
 @Setter
+@EqualsAndHashCode
+@AllArgsConstructor
+@NoArgsConstructor
 public class ParticipationRequest {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @Column(nullable = false)
+    @Column(nullable = false, insertable = false, updatable = false, columnDefinition = "TIMESTAMP WITHOUT TIME ZONE DEFAULT NOW()")
+    @CreationTimestamp
     private LocalDateTime created;
 
     @ManyToOne
@@ -35,5 +39,5 @@ public class ParticipationRequest {
     private User requester;
 
     @Column(nullable = false)
-    private ParticipationRequestStatus status;
+    private ParticipationRequestStatus status = ParticipationRequestStatus.PENDING;
 }

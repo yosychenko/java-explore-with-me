@@ -23,7 +23,13 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<UserDto> getUsers(List<Long> userIds, Pageable pageable) {
-        return userStorage.findAllByIdIn(userIds, pageable)
+        List<User> users;
+        if (userIds == null) {
+            users = userStorage.findAll(pageable).getContent();
+        } else {
+            users = userStorage.findAllByIdIn(userIds, pageable);
+        }
+        return users
                 .stream()
                 .map(UserMapper::toUserDto)
                 .collect(Collectors.toList());

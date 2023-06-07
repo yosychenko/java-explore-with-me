@@ -2,8 +2,10 @@ package ru.practicum.ewm.event.mapper;
 
 import ru.practicum.ewm.category.dto.CategoryDto;
 import ru.practicum.ewm.category.mapper.CategoryMapper;
+import ru.practicum.ewm.category.model.Category;
 import ru.practicum.ewm.event.dto.EventFullDto;
 import ru.practicum.ewm.event.dto.EventShortDto;
+import ru.practicum.ewm.event.dto.NewEventDto;
 import ru.practicum.ewm.event.model.Event;
 import ru.practicum.ewm.user.dto.UserShortDto;
 import ru.practicum.ewm.user.mapper.UserMapper;
@@ -19,7 +21,6 @@ public class EventMapper {
                                 .name(event.getCategory().getName())
                                 .build()
                 )
-                .confirmedRequests(event.getConfirmedRequests())
                 .eventDate(event.getEventDate())
                 .initiator(
                         UserShortDto.builder()
@@ -30,6 +31,7 @@ public class EventMapper {
                 .paid(event.getPaid())
                 .title(event.getTitle())
                 .views(event.getViews())
+                .confirmedRequests(event.getConfirmedRequests())
                 .build();
     }
 
@@ -43,7 +45,6 @@ public class EventMapper {
                                 .name(event.getCategory().getName())
                                 .build()
                 )
-                .confirmedRequests(event.getConfirmedRequests())
                 .createdOn(event.getCreatedOn())
                 .description(event.getDescription())
                 .eventDate(event.getEventDate())
@@ -61,6 +62,7 @@ public class EventMapper {
                 .state(event.getState())
                 .title(event.getTitle())
                 .views(event.getViews())
+                .confirmedRequests(event.getConfirmedRequests())
                 .build();
     }
 
@@ -69,12 +71,10 @@ public class EventMapper {
         event.setId(eventShortDto.getId());
         event.setAnnotation(eventShortDto.getAnnotation());
         event.setCategory(CategoryMapper.fromCategoryDto(eventShortDto.getCategory()));
-        event.setConfirmedRequests(eventShortDto.getConfirmedRequests());
         event.setEventDate(eventShortDto.getEventDate());
         event.setInitiator(UserMapper.fromUserShortDto(eventShortDto.getInitiator()));
         event.setPaid(eventShortDto.isPaid());
         event.setTitle(eventShortDto.getTitle());
-        event.setViews(eventShortDto.getViews());
         return event;
     }
 
@@ -83,15 +83,31 @@ public class EventMapper {
         event.setId(eventFullDto.getId());
         event.setAnnotation(eventFullDto.getAnnotation());
         event.setCategory(CategoryMapper.fromCategoryDto(eventFullDto.getCategory()));
-        event.setConfirmedRequests(eventFullDto.getConfirmedRequests());
+        event.setCreatedOn(eventFullDto.getCreatedOn());
         event.setDescription(eventFullDto.getDescription());
         event.setEventDate(eventFullDto.getEventDate());
         event.setInitiator(UserMapper.fromUserShortDto(eventFullDto.getInitiator()));
+        event.setLocation(eventFullDto.getLocation());
         event.setPaid(eventFullDto.isPaid());
-        event.setParticipantLimit(event.getParticipantLimit());
-        event.setRequestModeration(event.getRequestModeration());
+        event.setParticipantLimit(eventFullDto.getParticipantLimit());
+        event.setPublishedOn(eventFullDto.getPublishedOn());
+        event.setRequestModeration(eventFullDto.getRequestModeration());
+        event.setState(eventFullDto.getState());
         event.setTitle(eventFullDto.getTitle());
-        event.setViews(eventFullDto.getViews());
+        return event;
+    }
+
+    public static Event fromNewEventDto(NewEventDto newEventDto, Category category) {
+        Event event = new Event();
+        event.setAnnotation(newEventDto.getAnnotation());
+        event.setCategory(category);
+        event.setDescription(newEventDto.getDescription());
+        event.setEventDate(newEventDto.getEventDate());
+        event.setLocation(newEventDto.getLocation());
+        event.setPaid(newEventDto.getPaid());
+        event.setParticipantLimit(newEventDto.getParticipantLimit());
+        event.setRequestModeration(newEventDto.getRequestModeration());
+        event.setTitle(newEventDto.getTitle());
         return event;
     }
 }

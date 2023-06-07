@@ -6,5 +6,6 @@ package ru.practicum.ewm.request.model;
 public enum ParticipationRequestStatus {
     CONFIRMED,
     REJECTED,
-    PENDING
+    PENDING,
+    CANCELED
 }

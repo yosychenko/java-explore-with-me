@@ -25,12 +25,18 @@ public class ExceptionControllerAdvice {
         return errors;
     }
 
+    @ExceptionHandler({IncorrectEventDate.class, IncorrectDateRange.class})
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public Map<String, String> handleBadRequest(RuntimeException ex) {
+        return Map.of("message", ex.getMessage());
+    }
+
     @ExceptionHandler({
             DuplicateEntityException.class,
             EventsOfDeletedCategoryExistException.class,
             IncorrectEventStateAction.class,
             UserCannotParticipateInEventException.class,
-            UserCannotCancelRequestException.class
+            UserCannotChangeRequestStatusException.class
     })
     @ResponseStatus(HttpStatus.CONFLICT)
     public Map<String, String> handleConflictExceptions(RuntimeException ex) {
@@ -40,6 +46,12 @@ public class ExceptionControllerAdvice {
     @ExceptionHandler(EntityNotFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
     public Map<String, String> handleNotFoundExceptions(RuntimeException ex) {
+        return Map.of("message", ex.getMessage());
+    }
+
+    @ExceptionHandler(StatsServiceException.class)
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    public Map<String, String> handleInternalServerError(RuntimeException ex) {
         return Map.of("message", ex.getMessage());
     }
 }

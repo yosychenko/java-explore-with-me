@@ -21,6 +21,7 @@ public class CategoryMapper {
 
     public static Category fromCategoryDto(CategoryDto categoryDto) {
         Category category = new Category();
+        category.setId(categoryDto.getId());
         category.setName(categoryDto.getName());
 
         return category;

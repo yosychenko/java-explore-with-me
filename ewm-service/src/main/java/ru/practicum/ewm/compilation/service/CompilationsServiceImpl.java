@@ -3,6 +3,7 @@ package ru.practicum.ewm.compilation.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ru.practicum.ewm.compilation.dto.CompilationDto;
 import ru.practicum.ewm.compilation.dto.NewCompilationDto;
 import ru.practicum.ewm.compilation.dto.UpdateCompilationRequest;
@@ -49,6 +50,7 @@ public class CompilationsServiceImpl implements CompilationsService {
     }
 
     @Override
+    @Transactional
     public CompilationDto addCompilation(NewCompilationDto newCompilationDto) {
         List<EventFullDto> eventsDtos = eventService.getEventsByIds(newCompilationDto.getEvents());
         Compilation compilation = CompilationMapper.fromNewCompilationDto(newCompilationDto, eventsDtos);
@@ -62,10 +64,11 @@ public class CompilationsServiceImpl implements CompilationsService {
     }
 
     @Override
+    @Transactional
     public CompilationDto updateCompilation(long compId, UpdateCompilationRequest updateCompilationRequest) {
         Compilation compilationToUpdate = CompilationMapper.fromCompilationDto(getCompilationById(compId));
 
-        if (!updateCompilationRequest.getEvents().isEmpty()) {
+        if (updateCompilationRequest.getEvents() != null) {
             Set<Event> events = eventService.getEventsByIds(updateCompilationRequest.getEvents()).stream()
                     .map(EventMapper::fromEventFullDto)
                     .collect(Collectors.toSet());

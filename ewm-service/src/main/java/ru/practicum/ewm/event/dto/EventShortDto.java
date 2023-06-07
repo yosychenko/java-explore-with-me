@@ -20,7 +20,7 @@ public class EventShortDto {
     private String annotation;
     @NotNull(message = "Категория события должна быть заполнена.")
     private CategoryDto category;
-    private Long confirmedRequests;
+    private Long confirmedRequests = 0L;
     @NotBlank(message = "Дата и время начала события не должны быть пустыми.")
     private LocalDateTime eventDate;
     @NotNull(message = "Инициатор события должен быть заполнен.")
@@ -28,5 +28,5 @@ public class EventShortDto {
     private boolean paid;
     @NotBlank(message = "Название события не должно быть пустым.")
     private String title;
-    private Long views;
+    private Long views = 0L;
 }

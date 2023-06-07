@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -17,7 +18,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class NewCompilationDto {
-    private List<Long> events;
+    private List<Long> events = new ArrayList<>();
     private Boolean pinned = false;
     @NotBlank(message = "Заголовок подборки событий не должен быть пустым.")
     @Size(min = 1, max = 50, message = "Заголовок подборки событий должен быть длиной от 1 до 50 символов.")

@@ -1,5 +1,6 @@
 package ru.practicum.ewm.category.model;
 
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.DynamicUpdate;
@@ -11,6 +12,7 @@ import javax.persistence.*;
 @Table(name = "categories", schema = "public")
 @Getter
 @Setter
+@EqualsAndHashCode
 public class Category {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

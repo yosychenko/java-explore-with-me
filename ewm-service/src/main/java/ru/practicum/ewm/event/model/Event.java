@@ -1,7 +1,9 @@
 package ru.practicum.ewm.event.model;
 
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.DynamicUpdate;
 import ru.practicum.ewm.category.model.Category;
 import ru.practicum.ewm.compilation.model.Compilation;
@@ -17,6 +19,7 @@ import java.util.Set;
 @Table(name = "events", schema = "public")
 @Getter
 @Setter
+@EqualsAndHashCode
 public class Event {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -33,7 +36,7 @@ public class Event {
     private User initiator;
 
     @ManyToOne
-    @JoinColumn(name = "category", referencedColumnName = "id")
+    @JoinColumn(name = "category", referencedColumnName = "id", nullable = false)
     private Category category;
 
     @Column(nullable = false, length = 7000)
@@ -42,7 +45,8 @@ public class Event {
     @Column(nullable = false)
     private LocalDateTime eventDate;
 
-    @Column
+    @Column(nullable = false, insertable = false, updatable = false, columnDefinition = "TIMESTAMP WITHOUT TIME ZONE DEFAULT NOW()")
+    @CreationTimestamp
     private LocalDateTime createdOn;
 
     @Column
@@ -62,13 +66,18 @@ public class Event {
     private Boolean requestModeration;
 
     @Column
-    private EventState state;
+    private EventState state = EventState.PENDING;
 
     @ManyToMany(mappedBy = "events")
     private Set<Compilation> compilations;
 
-    private long views;
+    @Column(columnDefinition = "INT8 DEFAULT 0", insertable = false, nullable = false)
+    private Long confirmedRequests = 0L;
 
-    private long confirmedRequests;
+    @Column(columnDefinition = "INT8 DEFAULT 0", insertable = false, nullable = false)
+    private Long views = 0L;
+
+    @Column
+    private boolean isAvailable = true;
 }
 

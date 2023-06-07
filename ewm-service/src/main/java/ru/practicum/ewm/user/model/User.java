@@ -1,5 +1,6 @@
 package ru.practicum.ewm.user.model;
 
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.DynamicUpdate;
@@ -11,6 +12,7 @@ import javax.persistence.*;
 @Table(name = "users", schema = "public")
 @Setter
 @Getter
+@EqualsAndHashCode
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

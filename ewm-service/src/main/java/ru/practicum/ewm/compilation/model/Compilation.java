@@ -1,5 +1,6 @@
 package ru.practicum.ewm.compilation.model;
 
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.DynamicUpdate;
