@@ -1,6 +1,5 @@
 package ru.practicum.ewm.event.controller;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -55,7 +54,7 @@ public class EventsController {
     }
 
     @GetMapping("/{id}")
-    public EventFullDto getEventById(@PathVariable Long id, HttpServletRequest request) throws JsonProcessingException {
+    public EventFullDto getEventById(@PathVariable Long id, HttpServletRequest request) {
         return eventService.getPublishedEventById(id, request);
     }
 }

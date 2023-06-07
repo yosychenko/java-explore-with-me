@@ -1,6 +1,5 @@
 package ru.practicum.ewm.event.service;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.data.domain.Pageable;
@@ -102,53 +101,24 @@ public class EventServiceImpl implements EventService {
             }
         }
 
-        if (updateEventAdminRequest.getAnnotation() != null) {
-            eventToUpdate.setAnnotation(updateEventAdminRequest.getAnnotation());
-        }
-
-        if (updateEventAdminRequest.getCategory() != null) {
-            Category category = CategoryMapper.fromCategoryDto(categoriesService.getCategoryById(updateEventAdminRequest.getCategory()));
-            eventToUpdate.setCategory(category);
-        }
-
-        if (updateEventAdminRequest.getDescription() != null) {
-            eventToUpdate.setDescription(updateEventAdminRequest.getDescription());
-        }
-
-        if (updateEventAdminRequest.getEventDate() != null) {
-            if (ChronoUnit.HOURS.between(LocalDateTime.now(), updateEventAdminRequest.getEventDate()) < 2) {
-                throw new IncorrectEventDate("Дата и время на которые намечено событие не может быть раньше, чем через два часа от текущего момента.");
-            }
-            eventToUpdate.setEventDate(updateEventAdminRequest.getEventDate());
-        }
-
-        if (updateEventAdminRequest.getLocation() != null) {
-            eventToUpdate.setLocation(updateEventAdminRequest.getLocation());
-        }
-
-        if (updateEventAdminRequest.getPaid() != null) {
-            eventToUpdate.setPaid(updateEventAdminRequest.getPaid());
-        }
-
-        if (updateEventAdminRequest.getParticipantLimit() != null) {
-            eventToUpdate.setParticipantLimit(updateEventAdminRequest.getParticipantLimit());
-        }
-
-        if (updateEventAdminRequest.getRequestModeration() != null) {
-            eventToUpdate.setRequestModeration(updateEventAdminRequest.getRequestModeration());
-        }
-
-        if (updateEventAdminRequest.getTitle() != null) {
-            eventToUpdate.setTitle(updateEventAdminRequest.getTitle());
-        }
-
-        return EventMapper.toEventFullDto(eventStorage.save(eventToUpdate));
+        return partiallyUpdateEvent(
+                eventToUpdate,
+                updateEventAdminRequest.getAnnotation(),
+                updateEventAdminRequest.getCategory(),
+                updateEventAdminRequest.getDescription(),
+                updateEventAdminRequest.getEventDate(),
+                updateEventAdminRequest.getLocation(),
+                updateEventAdminRequest.getPaid(),
+                updateEventAdminRequest.getParticipantLimit(),
+                updateEventAdminRequest.getRequestModeration(),
+                updateEventAdminRequest.getTitle()
+        );
 
     }
 
     @Override
-    public Event updateEvent(Event updatedEvent) {
-        return eventStorage.save(updatedEvent);
+    public void updateEvent(Event updatedEvent) {
+        eventStorage.save(updatedEvent);
     }
 
     @Override
@@ -164,7 +134,7 @@ public class EventServiceImpl implements EventService {
     }
 
     @Override
-    public EventFullDto getPublishedEventById(long eventId, HttpServletRequest request) throws JsonProcessingException {
+    public EventFullDto getPublishedEventById(long eventId, HttpServletRequest request) {
         Optional<Event> optionalEvent = eventStorage.findEventByIdAndState(eventId, EventState.PUBLISHED);
         if (optionalEvent.isPresent()) {
             Event event = optionalEvent.get();
@@ -261,47 +231,18 @@ public class EventServiceImpl implements EventService {
             }
         }
 
-        if (updateEventUserRequest.getAnnotation() != null) {
-            eventToUpdate.setAnnotation(updateEventUserRequest.getAnnotation());
-        }
-
-        if (updateEventUserRequest.getCategory() != null) {
-            Category category = CategoryMapper.fromCategoryDto(categoriesService.getCategoryById(updateEventUserRequest.getCategory()));
-            eventToUpdate.setCategory(category);
-        }
-
-        if (updateEventUserRequest.getDescription() != null) {
-            eventToUpdate.setDescription(updateEventUserRequest.getDescription());
-        }
-
-        if (updateEventUserRequest.getEventDate() != null) {
-            if (ChronoUnit.HOURS.between(LocalDateTime.now(), updateEventUserRequest.getEventDate()) < 2) {
-                throw new IncorrectEventDate("Дата и время на которые намечено событие не может быть раньше, чем через два часа от текущего момента.");
-            }
-            eventToUpdate.setEventDate(updateEventUserRequest.getEventDate());
-        }
-
-        if (updateEventUserRequest.getLocation() != null) {
-            eventToUpdate.setLocation(updateEventUserRequest.getLocation());
-        }
-
-        if (updateEventUserRequest.getPaid() != null) {
-            eventToUpdate.setPaid(updateEventUserRequest.getPaid());
-        }
-
-        if (updateEventUserRequest.getParticipantLimit() != null) {
-            eventToUpdate.setParticipantLimit(updateEventUserRequest.getParticipantLimit());
-        }
-
-        if (updateEventUserRequest.getRequestModeration() != null) {
-            eventToUpdate.setRequestModeration(updateEventUserRequest.getRequestModeration());
-        }
-
-        if (updateEventUserRequest.getTitle() != null) {
-            eventToUpdate.setTitle(updateEventUserRequest.getTitle());
-        }
-
-        return EventMapper.toEventFullDto(eventStorage.save(eventToUpdate));
+        return partiallyUpdateEvent(
+                eventToUpdate,
+                updateEventUserRequest.getAnnotation(),
+                updateEventUserRequest.getCategory(),
+                updateEventUserRequest.getDescription(),
+                updateEventUserRequest.getEventDate(),
+                updateEventUserRequest.getLocation(),
+                updateEventUserRequest.getPaid(),
+                updateEventUserRequest.getParticipantLimit(),
+                updateEventUserRequest.getRequestModeration(),
+                updateEventUserRequest.getTitle()
+        );
     }
 
     @Override
@@ -316,5 +257,59 @@ public class EventServiceImpl implements EventService {
         return eventStorage.findAllByCategoryId(catId).stream()
                 .map(EventMapper::toEventFullDto)
                 .collect(Collectors.toList());
+    }
+
+    private EventFullDto partiallyUpdateEvent(
+            Event eventToUpdate,
+            String annotation,
+            Long category,
+            String description,
+            LocalDateTime eventDate,
+            Location location,
+            Boolean paid,
+            Integer participantLimit,
+            Boolean requestModeration,
+            String title
+    ) {
+        if (annotation != null) {
+            eventToUpdate.setAnnotation(annotation);
+        }
+
+        if (category != null) {
+            eventToUpdate.setCategory(CategoryMapper.fromCategoryDto(categoriesService.getCategoryById(category)));
+        }
+
+        if (description != null) {
+            eventToUpdate.setDescription(description);
+        }
+
+        if (eventDate != null) {
+            if (ChronoUnit.HOURS.between(LocalDateTime.now(), eventDate) < 2) {
+                throw new IncorrectEventDate("Дата и время на которые намечено событие не может быть раньше, чем через два часа от текущего момента.");
+            }
+            eventToUpdate.setEventDate(eventDate);
+        }
+
+        if (location != null) {
+            eventToUpdate.setLocation(location);
+        }
+
+        if (paid != null) {
+            eventToUpdate.setPaid(paid);
+        }
+
+        if (participantLimit != null) {
+            eventToUpdate.setParticipantLimit(participantLimit);
+        }
+
+        if (requestModeration != null) {
+            eventToUpdate.setRequestModeration(requestModeration);
+        }
+
+        if (title != null) {
+            eventToUpdate.setTitle(title);
+        }
+
+        return EventMapper.toEventFullDto(eventStorage.save(eventToUpdate));
     }
 }

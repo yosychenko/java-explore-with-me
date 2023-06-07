@@ -18,12 +18,10 @@ import java.util.stream.Collectors;
 
 @Service
 public class StatsServiceImpl implements StatsService {
+    private final StatsClient statsClient;
+    private final DateTimeFormatter dateTimeFormatter;
     @Value("${spring.application.name}")
     private String appName;
-
-    private final StatsClient statsClient;
-
-    private final DateTimeFormatter dateTimeFormatter;
 
     @Autowired
     public StatsServiceImpl(

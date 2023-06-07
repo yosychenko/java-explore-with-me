@@ -2,7 +2,6 @@ package ru.practicum.ewm.compilation.mapper;
 
 import ru.practicum.ewm.compilation.dto.CompilationDto;
 import ru.practicum.ewm.compilation.dto.NewCompilationDto;
-import ru.practicum.ewm.compilation.dto.UpdateCompilationRequest;
 import ru.practicum.ewm.compilation.model.Compilation;
 import ru.practicum.ewm.event.dto.EventFullDto;
 import ru.practicum.ewm.event.mapper.EventMapper;
@@ -41,12 +40,4 @@ public class CompilationMapper {
 
     }
 
-    public static Compilation fromUpdateCompilationRequest(UpdateCompilationRequest updateCompilationRequest, List<EventFullDto> eventFullDtos) {
-        Compilation compilation = new Compilation();
-        compilation.setTitle(updateCompilationRequest.getTitle());
-        compilation.setPinned(updateCompilationRequest.getPinned());
-        compilation.setEvents(eventFullDtos.stream().map(EventMapper::fromEventFullDto).collect(Collectors.toSet()));
-        return compilation;
-
-    }
 }

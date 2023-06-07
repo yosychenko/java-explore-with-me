@@ -1,14 +1,10 @@
 package ru.practicum.ewm.event.service;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import org.springframework.data.domain.Pageable;
 import ru.practicum.ewm.event.dto.*;
 import ru.practicum.ewm.event.model.Event;
 import ru.practicum.ewm.event.storage.EventAdminFilterParams;
 import ru.practicum.ewm.event.storage.EventFilterParams;
-import ru.practicum.ewm.request.dto.EventRequestStatusUpdateRequest;
-import ru.practicum.ewm.request.dto.EventRequestStatusUpdateResult;
-import ru.practicum.ewm.request.dto.ParticipationRequestDto;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
@@ -18,11 +14,11 @@ public interface EventService {
 
     EventFullDto updateEvent(long eventId, UpdateEventAdminRequest updateEventAdminRequest);
 
-    Event updateEvent(Event updatedEvent);
+    void updateEvent(Event updatedEvent);
 
     List<EventShortDto> getEvents(EventFilterParams params, Pageable pageable, HttpServletRequest request);
 
-    EventFullDto getPublishedEventById(long eventId, HttpServletRequest request) throws JsonProcessingException;
+    EventFullDto getPublishedEventById(long eventId, HttpServletRequest request);
 
     EventFullDto getEventById(long eventId);
 

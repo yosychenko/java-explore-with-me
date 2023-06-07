@@ -21,7 +21,7 @@ public class EventFullDto {
     private String annotation;
     @NotNull(message = "Категория события должна быть заполнена.")
     private CategoryDto category;
-    private Long confirmedRequests = 0L;
+    private Long confirmedRequests;
     private LocalDateTime createdOn;
     private String description;
     @NotNull(message = "Дата и время начала события не должны быть пустыми.")
@@ -33,9 +33,9 @@ public class EventFullDto {
     private boolean paid;
     private Integer participantLimit;
     private LocalDateTime publishedOn;
-    private Boolean requestModeration = true;
+    private Boolean requestModeration;
     private EventState state;
     @NotBlank(message = "Название события не должно быть пустым.")
     private String title;
-    private Long views = 0L;
+    private Long views;
 }

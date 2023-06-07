@@ -1,10 +1,8 @@
 package ru.practicum.ewm.request.service;
 
-import ru.practicum.ewm.event.model.Event;
 import ru.practicum.ewm.request.dto.EventRequestStatusUpdateRequest;
 import ru.practicum.ewm.request.dto.EventRequestStatusUpdateResult;
 import ru.practicum.ewm.request.dto.ParticipationRequestDto;
-import ru.practicum.ewm.request.model.ConfirmedRequestsForEvent;
 
 import java.util.List;
 
