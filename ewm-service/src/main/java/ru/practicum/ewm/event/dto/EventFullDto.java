@@ -16,12 +16,12 @@ import java.time.LocalDateTime;
 @Data
 @Builder
 public class EventFullDto {
-    private Long id;
+    private long id;
     @NotBlank(message = "Краткое описание события не должно быть пустым.")
     private String annotation;
     @NotNull(message = "Категория события должна быть заполнена.")
     private CategoryDto category;
-    private Long confirmedRequests;
+    private long confirmedRequests;
     private LocalDateTime createdOn;
     private String description;
     @NotNull(message = "Дата и время начала события не должны быть пустыми.")
@@ -31,11 +31,11 @@ public class EventFullDto {
     @NotNull(message = "Место проведения события не должно быть пустым.")
     private Location location;
     private boolean paid;
-    private Integer participantLimit;
+    private int participantLimit;
     private LocalDateTime publishedOn;
-    private Boolean requestModeration;
+    private boolean requestModeration;
     private EventState state;
     @NotBlank(message = "Название события не должно быть пустым.")
     private String title;
-    private Long views;
+    private long views;
 }

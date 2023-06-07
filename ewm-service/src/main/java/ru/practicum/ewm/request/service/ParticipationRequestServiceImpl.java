@@ -89,7 +89,8 @@ public class ParticipationRequestServiceImpl implements ParticipationRequestServ
         try {
             return ParticipationRequestMapper.toParticipationRequestDto(participationRequestStorage.save(participationRequest));
         } catch (DataIntegrityViolationException ex) {
-            throw new DuplicateEntityException(String.format("Запрос на участие пользователя c ID=%s в событии с ID=%s уже существует.", userId, eventId));
+            throw new DuplicateEntityException(String.format("Запрос на участие пользователя c ID=%s " +
+                    "в событии с ID=%s уже существует.", userId, eventId));
         }
     }
 
@@ -101,7 +102,8 @@ public class ParticipationRequestServiceImpl implements ParticipationRequestServ
         ParticipationRequestDto participationRequestDto = getParticipationRequestById(requestId);
 
         if (participationRequestDto.getRequester() != userId) {
-            throw new UserCannotChangeRequestStatusException("Пользователь с ID=%s не может отменить запрос с ID=%s - он не является его автором.");
+            throw new UserCannotChangeRequestStatusException("Пользователь с ID=%s не может отменить запрос с ID=%s - " +
+                    "он не является его автором.");
         }
 
         Event event = EventMapper.fromEventFullDto(eventService.getEventById(participationRequestDto.getEvent()));
@@ -155,7 +157,7 @@ public class ParticipationRequestServiceImpl implements ParticipationRequestServ
 
         for (ParticipationRequest request : requests) {
             if (!request.getStatus().equals(ParticipationRequestStatus.PENDING)) {
-                throw new UserCannotChangeRequestStatusException("Cтатус можно изменить только у заявок, находящихся в состоянии ожидания");
+                throw new UserCannotChangeRequestStatusException("Статус можно изменить только у заявок, находящихся в состоянии ожидания.");
             }
 
             if (eventRequestStatusUpdateRequest.getStatus().equals(ParticipationRequestStatus.CONFIRMED) &&

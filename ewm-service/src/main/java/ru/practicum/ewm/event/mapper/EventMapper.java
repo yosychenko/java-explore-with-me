@@ -91,7 +91,7 @@ public class EventMapper {
         event.setPaid(eventFullDto.isPaid());
         event.setParticipantLimit(eventFullDto.getParticipantLimit());
         event.setPublishedOn(eventFullDto.getPublishedOn());
-        event.setRequestModeration(eventFullDto.getRequestModeration());
+        event.setRequestModeration(eventFullDto.isRequestModeration());
         event.setState(eventFullDto.getState());
         event.setTitle(eventFullDto.getTitle());
         return event;
@@ -104,9 +104,9 @@ public class EventMapper {
         event.setDescription(newEventDto.getDescription());
         event.setEventDate(newEventDto.getEventDate());
         event.setLocation(newEventDto.getLocation());
-        event.setPaid(newEventDto.getPaid());
+        event.setPaid(newEventDto.isPaid());
         event.setParticipantLimit(newEventDto.getParticipantLimit());
-        event.setRequestModeration(newEventDto.getRequestModeration());
+        event.setRequestModeration(newEventDto.isRequestModeration());
         event.setTitle(newEventDto.getTitle());
         return event;
     }

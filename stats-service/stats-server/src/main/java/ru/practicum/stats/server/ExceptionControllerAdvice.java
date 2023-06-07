@@ -1,3 +1,5 @@
+package ru.practicum.stats.server;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;

@@ -29,9 +29,9 @@ public class NewEventDto {
     private LocalDateTime eventDate;
     @NotNull(message = "Место проведения события не должно быть пустым.")
     private Location location;
-    private Boolean paid = false;
-    private Integer participantLimit = 0;
-    private Boolean requestModeration = true;
+    private boolean paid = false;
+    private int participantLimit = 0;
+    private boolean requestModeration = true;
     @NotBlank(message = "Название события не должно быть пустым.")
     @Size(min = 3, max = 120, message = "Название события должно быть длиной от 20 до 120 символов.")
     private String title;

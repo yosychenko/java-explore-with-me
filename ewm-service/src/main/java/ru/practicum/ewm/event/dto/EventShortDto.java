@@ -15,12 +15,12 @@ import java.time.LocalDateTime;
 @Data
 @Builder
 public class EventShortDto {
-    private Long id;
+    private long id;
     @NotBlank(message = "Краткое описание события не должно быть пустым.")
     private String annotation;
     @NotNull(message = "Категория события должна быть заполнена.")
     private CategoryDto category;
-    private Long confirmedRequests;
+    private long confirmedRequests;
     @NotBlank(message = "Дата и время начала события не должны быть пустыми.")
     private LocalDateTime eventDate;
     @NotNull(message = "Инициатор события должен быть заполнен.")
@@ -28,5 +28,5 @@ public class EventShortDto {
     private boolean paid;
     @NotBlank(message = "Название события не должно быть пустым.")
     private String title;
-    private Long views;
+    private long views;
 }
