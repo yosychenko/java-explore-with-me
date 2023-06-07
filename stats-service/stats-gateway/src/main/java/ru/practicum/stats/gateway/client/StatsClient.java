@@ -9,14 +9,13 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.util.DefaultUriBuilderFactory;
 import ru.practicum.stats.dto.EndpointHitDto;
 
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
 
 @Service
 public class StatsClient extends BaseClient {
     @Autowired
-    public StatsClient(@Value("${stats-server.url}") String serverUrl, RestTemplateBuilder builder) {
+    public StatsClient(@Value("${STATS_SERVER_URL}") String serverUrl, RestTemplateBuilder builder) {
         super(
                 builder
                         .uriTemplateHandler(new DefaultUriBuilderFactory(serverUrl))
@@ -31,8 +30,8 @@ public class StatsClient extends BaseClient {
 
     public ResponseEntity<Object> getStats(
             List<String> uris,
-            LocalDateTime start,
-            LocalDateTime end,
+            String start,
+            String end,
             boolean unique
     ) {
 

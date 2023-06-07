@@ -1,880 +1,880 @@
 {
-	"info": {
-		"_postman_id": "a3a46993-7a83-4e0f-aa0e-9fb5e1d8f9c7",
-		"name": "Stats Service",
-		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "26562864"
-	},
-	"item": [
-		{
-			"name": "Добавление посещения эндпоинта - Не указано приложение",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							"pm.test(\"Status code is 400\", function () {",
-							"    pm.expect(pm.response.code).to.be.oneOf([400]);",
-							"});"
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n  \"uri\": \"/events/2\",\n  \"ip\": \"192.163.0.1\",\n  \"timestamp\": \"2022-09-06 11:00:23\"\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "{{baseUrl}}/hit",
-					"host": [
-						"{{baseUrl}}"
-					],
-					"path": [
-						"hit"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Добавление посещения эндпоинта - Не указан эндпоинт",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							"pm.test(\"Status code is 400\", function () {",
-							"    pm.expect(pm.response.code).to.be.oneOf([400]);",
-							"});"
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n  \"app\": \"ewm-main-service\",\n  \"ip\": \"192.163.0.1\",\n  \"timestamp\": \"2022-09-06 11:00:23\"\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "{{baseUrl}}/hit",
-					"host": [
-						"{{baseUrl}}"
-					],
-					"path": [
-						"hit"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Добавление посещения эндпоинта - Не указан IP",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							"pm.test(\"Status code is 400\", function () {",
-							"    pm.expect(pm.response.code).to.be.oneOf([400]);",
-							"});"
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n  \"app\": \"ewm-main-service\",\n  \"uri\": \"/events/2\",\n  \"timestamp\": \"2022-09-06 11:00:23\"\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "{{baseUrl}}/hit",
-					"host": [
-						"{{baseUrl}}"
-					],
-					"path": [
-						"hit"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Добавление посещения эндпоинта - Не указаны дата и время посещения",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							"pm.test(\"Status code is 400\", function () {",
-							"    pm.expect(pm.response.code).to.be.oneOf([400]);",
-							"});"
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n  \"app\": \"ewm-main-service\",\n  \"uri\": \"/events/2\",\n  \"ip\": \"192.163.0.1\"\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "{{baseUrl}}/hit",
-					"host": [
-						"{{baseUrl}}"
-					],
-					"path": [
-						"hit"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Добавление посещения эндпоинта /events/1",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							"pm.test(\"Successful POST request\", function () {",
-							"    pm.expect(pm.response.code).to.be.oneOf([201, 202]);",
-							"});"
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n  \"app\": \"ewm-main-service\",\n  \"uri\": \"/events/1\",\n  \"ip\": \"192.163.0.1\",\n  \"timestamp\": \"2022-09-06 11:00:23\"\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "{{baseUrl}}/hit",
-					"host": [
-						"{{baseUrl}}"
-					],
-					"path": [
-						"hit"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Добавление посещения эндпоинта /events/1 с другого IP",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							"pm.test(\"Successful POST request\", function () {",
-							"    pm.expect(pm.response.code).to.be.oneOf([201, 202]);",
-							"});"
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n  \"app\": \"ewm-main-service\",\n  \"uri\": \"/events/1\",\n  \"ip\": \"192.163.0.2\",\n  \"timestamp\": \"2022-09-06 11:10:23\"\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "{{baseUrl}}/hit",
-					"host": [
-						"{{baseUrl}}"
-					],
-					"path": [
-						"hit"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Добавление посещения эндпоинта /events/2",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							"pm.test(\"Successful POST request\", function () {",
-							"    pm.expect(pm.response.code).to.be.oneOf([201, 202]);",
-							"});"
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n  \"app\": \"ewm-main-service\",\n  \"uri\": \"/events/2\",\n  \"ip\": \"192.163.0.1\",\n  \"timestamp\": \"2022-09-06 11:15:23\"\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "{{baseUrl}}/hit",
-					"host": [
-						"{{baseUrl}}"
-					],
-					"path": [
-						"hit"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Добавление посещения эндпоинта /events/2 c такого-же IP",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							"pm.test(\"Successful POST request\", function () {",
-							"    pm.expect(pm.response.code).to.be.oneOf([201, 202]);",
-							"});"
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n  \"app\": \"ewm-main-service\",\n  \"uri\": \"/events/2\",\n  \"ip\": \"192.163.0.1\",\n  \"timestamp\": \"2022-09-06 11:15:23\"\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "{{baseUrl}}/hit",
-					"host": [
-						"{{baseUrl}}"
-					],
-					"path": [
-						"hit"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Получить все посещения для эндпоинта /events/1 - Дата начала позже даты конца",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							"pm.test(\"Status code is 400\", function () {",
-							"    pm.expect(pm.response.code).to.be.oneOf([400]);",
-							"});",
-							""
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "{{baseUrl}}/stats?uris=/events/1&start=2022-10-06 10:00:23&end=2022-09-06 12:00:23",
-					"host": [
-						"{{baseUrl}}"
-					],
-					"path": [
-						"stats"
-					],
-					"query": [
-						{
-							"key": "uris",
-							"value": "/events/1"
-						},
-						{
-							"key": "start",
-							"value": "2022-10-06 10:00:23"
-						},
-						{
-							"key": "end",
-							"value": "2022-09-06 12:00:23"
-						},
-						{
-							"key": "unique",
-							"value": "true",
-							"disabled": true
-						}
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Получить все посещения для эндпоинта /events/1",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							"pm.test(\"Successful GET request\", function () {",
-							"    pm.expect(pm.response.code).to.be.oneOf([200]);",
-							"});",
-							"",
-							"const body = pm.response.json();",
-							"",
-							"pm.test(\"Has body containing array\", function () {",
-							"    pm.response.to.be.withBody;",
-							"    pm.response.to.be.json;",
-							"    pm.expect(body).is.an('array');",
-							"});",
-							"",
-							"pm.test(\"Has body containing array of length 1\", function () {",
-							"    pm.expect(body.length).to.be.eq(1);",
-							"});",
-							"",
-							"pm.test(\"Test stats[0] 'app' field\", function() {",
-							"    pm.expect(body[0]).to.have.property('app');",
-							"    pm.expect(body[0].app, '\"app\" must be ewm-main-service').to.eql('ewm-main-service');",
-							"});",
-							"",
-							"pm.test(\"Test stats[0] 'uri' field\", function() {",
-							"    pm.expect(body[0]).to.have.property('uri');",
-							"    pm.expect(body[0].uri, '\"uri\" must be /events/1').to.eql('/events/1');",
-							"});",
-							"",
-							"pm.test(\"Test stats[0] 'hits' field\", function() {",
-							"    pm.expect(body[0]).to.have.property('hits'); ",
-							"    pm.expect(body[0].hits, '\"hits\" must be 1').to.eql(2);});"
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "{{baseUrl}}/stats?uris=/events/1&start=2022-09-06 10:00:23&end=2022-09-06 12:00:23",
-					"host": [
-						"{{baseUrl}}"
-					],
-					"path": [
-						"stats"
-					],
-					"query": [
-						{
-							"key": "uris",
-							"value": "/events/1"
-						},
-						{
-							"key": "start",
-							"value": "2022-09-06 10:00:23"
-						},
-						{
-							"key": "end",
-							"value": "2022-09-06 12:00:23"
-						},
-						{
-							"key": "unique",
-							"value": "true",
-							"disabled": true
-						}
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Получить все уникальные посещения для эндпоинта /events/1",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							"pm.test(\"Successful GET request\", function () {",
-							"    pm.expect(pm.response.code).to.be.oneOf([200]);",
-							"});",
-							"",
-							"const body = pm.response.json();",
-							"",
-							"pm.test(\"Has body containing array\", function () {",
-							"    pm.response.to.be.withBody;",
-							"    pm.response.to.be.json;",
-							"    pm.expect(body).is.an('array');",
-							"});",
-							"",
-							"pm.test(\"Has body containing array of length 1\", function () {",
-							"    pm.expect(body.length).to.be.eq(1);",
-							"});",
-							"",
-							"pm.test(\"Test stats[0] 'app' field\", function() {",
-							"    pm.expect(body[0]).to.have.property('app');",
-							"    pm.expect(body[0].app, '\"app\" must be ewm-main-service').to.eql('ewm-main-service');",
-							"});",
-							"",
-							"pm.test(\"Test stats[0] 'uri' field\", function() {",
-							"    pm.expect(body[0]).to.have.property('uri');",
-							"    pm.expect(body[0].uri, '\"uri\" must be /events/1').to.eql('/events/1');",
-							"});",
-							"",
-							"pm.test(\"Test stats[0] 'hits' field\", function() {",
-							"    pm.expect(body[0]).to.have.property('hits'); ",
-							"    pm.expect(body[0].hits, '\"hits\" must be 1').to.eql(2);});"
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "{{baseUrl}}/stats?uris=/events/1&start=2022-09-06 10:00:23&end=2022-09-06 12:00:23&unique=true",
-					"host": [
-						"{{baseUrl}}"
-					],
-					"path": [
-						"stats"
-					],
-					"query": [
-						{
-							"key": "uris",
-							"value": "/events/1"
-						},
-						{
-							"key": "start",
-							"value": "2022-09-06 10:00:23"
-						},
-						{
-							"key": "end",
-							"value": "2022-09-06 12:00:23"
-						},
-						{
-							"key": "unique",
-							"value": "true"
-						}
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Получить все посещения для эндпоинта /events/2",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							"pm.test(\"Successful GET request\", function () {",
-							"    pm.expect(pm.response.code).to.be.oneOf([200]);",
-							"});",
-							"",
-							"const body = pm.response.json();",
-							"",
-							"pm.test(\"Has body containing array\", function () {",
-							"    pm.response.to.be.withBody;",
-							"    pm.response.to.be.json;",
-							"    pm.expect(body).is.an('array');",
-							"});",
-							"",
-							"pm.test(\"Has body containing array of length 1\", function () {",
-							"    pm.expect(body.length).to.be.eq(1);",
-							"});",
-							"",
-							"pm.test(\"Test stats[0] 'app' field\", function() {",
-							"    pm.expect(body[0]).to.have.property('app');",
-							"    pm.expect(body[0].app, '\"app\" must be ewm-main-service').to.eql('ewm-main-service');",
-							"});",
-							"",
-							"pm.test(\"Test stats[0] 'uri' field\", function() {",
-							"    pm.expect(body[0]).to.have.property('uri');",
-							"    pm.expect(body[0].uri, '\"uri\" must be /events/2').to.eql('/events/2');",
-							"});",
-							"",
-							"pm.test(\"Test stats[0] 'hits' field\", function() {",
-							"    pm.expect(body[0]).to.have.property('hits'); ",
-							"    pm.expect(body[0].hits, '\"hits\" must be 1').to.eql(2);});"
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "{{baseUrl}}/stats?uris=/events/2&start=2022-09-06 10:00:23&end=2022-09-06 12:00:23",
-					"host": [
-						"{{baseUrl}}"
-					],
-					"path": [
-						"stats"
-					],
-					"query": [
-						{
-							"key": "uris",
-							"value": "/events/2"
-						},
-						{
-							"key": "start",
-							"value": "2022-09-06 10:00:23"
-						},
-						{
-							"key": "end",
-							"value": "2022-09-06 12:00:23"
-						},
-						{
-							"key": "unique",
-							"value": "true",
-							"disabled": true
-						}
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Получить все уникальные посещения для эндпоинта /events/2",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							"pm.test(\"Successful GET request\", function () {",
-							"    pm.expect(pm.response.code).to.be.oneOf([200]);",
-							"});",
-							"",
-							"const body = pm.response.json();",
-							"",
-							"pm.test(\"Has body containing array\", function () {",
-							"    pm.response.to.be.withBody;",
-							"    pm.response.to.be.json;",
-							"    pm.expect(body).is.an('array');",
-							"});",
-							"",
-							"pm.test(\"Has body containing array of length 1\", function () {",
-							"    pm.expect(body.length).to.be.eq(1);",
-							"});",
-							"",
-							"pm.test(\"Test stats[0] 'app' field\", function() {",
-							"    pm.expect(body[0]).to.have.property('app');",
-							"    pm.expect(body[0].app, '\"app\" must be ewm-main-service').to.eql('ewm-main-service');",
-							"});",
-							"",
-							"pm.test(\"Test stats[0] 'uri' field\", function() {",
-							"    pm.expect(body[0]).to.have.property('uri');",
-							"    pm.expect(body[0].uri, '\"uri\" must be /events/2').to.eql('/events/2');",
-							"});",
-							"",
-							"pm.test(\"Test stats[0] 'hits' field\", function() {",
-							"    pm.expect(body[0]).to.have.property('hits'); ",
-							"    pm.expect(body[0].hits, '\"hits\" must be 1').to.eql(1);});"
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "{{baseUrl}}/stats?uris=/events/2&start=2022-09-06 10:00:23&end=2022-09-06 12:00:23&unique=true",
-					"host": [
-						"{{baseUrl}}"
-					],
-					"path": [
-						"stats"
-					],
-					"query": [
-						{
-							"key": "uris",
-							"value": "/events/2"
-						},
-						{
-							"key": "start",
-							"value": "2022-09-06 10:00:23"
-						},
-						{
-							"key": "end",
-							"value": "2022-09-06 12:00:23"
-						},
-						{
-							"key": "unique",
-							"value": "true"
-						}
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Получить все посещения для эндпоинтов /events/1 и /events/2",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							"pm.test(\"Successful GET request\", function () {",
-							"    pm.expect(pm.response.code).to.be.oneOf([200]);",
-							"});",
-							"",
-							"const body = pm.response.json();",
-							"",
-							"pm.test(\"Has body containing array\", function () {",
-							"    pm.response.to.be.withBody;",
-							"    pm.response.to.be.json;",
-							"    pm.expect(body).is.an('array');",
-							"});",
-							"",
-							"pm.test(\"Has body containing array of length 1\", function () {",
-							"    pm.expect(body.length).to.be.eq(2);",
-							"});",
-							"",
-							"pm.test(\"Test stats[0] 'app' field\", function() {",
-							"    pm.expect(body[0]).to.have.property('app');",
-							"    pm.expect(body[0].app, '\"app\" must be ewm-main-service').to.eql('ewm-main-service');",
-							"});",
-							"",
-							"pm.test(\"Test stats[0] 'uri' field\", function() {",
-							"    pm.expect(body[0]).to.have.property('uri');",
-							"    pm.expect(body[0].uri, '\"uri\" must be /events/1').to.eql('/events/1');",
-							"});",
-							"",
-							"pm.test(\"Test stats[0] 'hits' field\", function() {",
-							"    pm.expect(body[0]).to.have.property('hits'); ",
-							"    pm.expect(body[0].hits, '\"hits\" must be 1').to.eql(2);});",
-							"",
-							"pm.test(\"Test stats[1] 'app' field\", function() {",
-							"    pm.expect(body[1]).to.have.property('app');",
-							"    pm.expect(body[1].app, '\"app\" must be ewm-main-service').to.eql('ewm-main-service');",
-							"});",
-							"",
-							"pm.test(\"Test stats[1] 'uri' field\", function() {",
-							"    pm.expect(body[1]).to.have.property('uri');",
-							"    pm.expect(body[1].uri, '\"uri\" must be /events/2').to.eql('/events/2');",
-							"});",
-							"",
-							"pm.test(\"Test stats[1] 'hits' field\", function() {",
-							"    pm.expect(body[1]).to.have.property('hits'); ",
-							"    pm.expect(body[1].hits, '\"hits\" must be 2').to.eql(2);});"
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "{{baseUrl}}/stats?uris=/events/1,/events/2&start=2022-09-06 10:00:23&end=2022-09-06 12:00:23",
-					"host": [
-						"{{baseUrl}}"
-					],
-					"path": [
-						"stats"
-					],
-					"query": [
-						{
-							"key": "uris",
-							"value": "/events/1,/events/2"
-						},
-						{
-							"key": "start",
-							"value": "2022-09-06 10:00:23"
-						},
-						{
-							"key": "end",
-							"value": "2022-09-06 12:00:23"
-						},
-						{
-							"key": "unique",
-							"value": "true",
-							"disabled": true
-						}
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Получить все уникальные посещения для всех эндпоинтов",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							"pm.test(\"Successful GET request\", function () {",
-							"    pm.expect(pm.response.code).to.be.oneOf([200]);",
-							"});",
-							"",
-							"const body = pm.response.json();",
-							"",
-							"pm.test(\"Has body containing array\", function () {",
-							"    pm.response.to.be.withBody;",
-							"    pm.response.to.be.json;",
-							"    pm.expect(body).is.an('array');",
-							"});",
-							"",
-							"pm.test(\"Has body containing array of length 1\", function () {",
-							"    pm.expect(body.length).to.be.eq(2);",
-							"});",
-							"",
-							"pm.test(\"Test stats[0] 'app' field\", function() {",
-							"    pm.expect(body[0]).to.have.property('app');",
-							"    pm.expect(body[0].app, '\"app\" must be ewm-main-service').to.eql('ewm-main-service');",
-							"});",
-							"",
-							"pm.test(\"Test stats[0] 'uri' field\", function() {",
-							"    pm.expect(body[0]).to.have.property('uri');",
-							"    pm.expect(body[0].uri, '\"uri\" must be /events/1').to.eql('/events/1');",
-							"});",
-							"",
-							"pm.test(\"Test stats[0] 'hits' field\", function() {",
-							"    pm.expect(body[0]).to.have.property('hits'); ",
-							"    pm.expect(body[0].hits, '\"hits\" must be 1').to.eql(2);});",
-							"",
-							"pm.test(\"Test stats[1] 'app' field\", function() {",
-							"    pm.expect(body[1]).to.have.property('app');",
-							"    pm.expect(body[1].app, '\"app\" must be ewm-main-service').to.eql('ewm-main-service');",
-							"});",
-							"",
-							"pm.test(\"Test stats[1] 'uri' field\", function() {",
-							"    pm.expect(body[1]).to.have.property('uri');",
-							"    pm.expect(body[1].uri, '\"uri\" must be /events/2').to.eql('/events/2');",
-							"});",
-							"",
-							"pm.test(\"Test stats[1] 'hits' field\", function() {",
-							"    pm.expect(body[1]).to.have.property('hits'); ",
-							"    pm.expect(body[1].hits, '\"hits\" must be 2').to.eql(1);});"
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "{{baseUrl}}/stats?start=2022-09-06 10:00:23&end=2022-09-06 12:00:23&unique=true",
-					"host": [
-						"{{baseUrl}}"
-					],
-					"path": [
-						"stats"
-					],
-					"query": [
-						{
-							"key": "uris",
-							"value": "/events/1,/events/2",
-							"disabled": true
-						},
-						{
-							"key": "start",
-							"value": "2022-09-06 10:00:23"
-						},
-						{
-							"key": "end",
-							"value": "2022-09-06 12:00:23"
-						},
-						{
-							"key": "unique",
-							"value": "true"
-						}
-					]
-				}
-			},
-			"response": []
-		}
-	],
-	"event": [
-		{
-			"listen": "prerequest",
-			"script": {
-				"type": "text/javascript",
-				"exec": [
-					""
-				]
-			}
-		},
-		{
-			"listen": "test",
-			"script": {
-				"type": "text/javascript",
-				"exec": [
-					""
-				]
-			}
-		}
-	],
-	"variable": [
-		{
-			"key": "baseUrl",
-			"value": "http://localhost:8080",
-			"type": "string"
-		},
-		{
-			"key": "serverUrl",
-			"value": "http://localhost:9090",
-			"type": "string"
-		}
-	]
+  "info": {
+    "_postman_id": "a3a46993-7a83-4e0f-aa0e-9fb5e1d8f9c7",
+    "name": "Stats Service",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "26562864"
+  },
+  "item": [
+    {
+      "name": "Добавление посещения эндпоинта - Не указано приложение",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 400\", function () {",
+              "    pm.expect(pm.response.code).to.be.oneOf([400]);",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"uri\": \"/events/2\",\n  \"ip\": \"192.163.0.1\",\n  \"timestamp\": \"2022-09-06 11:00:23\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{baseUrl}}/hit",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "hit"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Добавление посещения эндпоинта - Не указан эндпоинт",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 400\", function () {",
+              "    pm.expect(pm.response.code).to.be.oneOf([400]);",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"app\": \"ewm-main-service\",\n  \"ip\": \"192.163.0.1\",\n  \"timestamp\": \"2022-09-06 11:00:23\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{baseUrl}}/hit",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "hit"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Добавление посещения эндпоинта - Не указан IP",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 400\", function () {",
+              "    pm.expect(pm.response.code).to.be.oneOf([400]);",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"app\": \"ewm-main-service\",\n  \"uri\": \"/events/2\",\n  \"timestamp\": \"2022-09-06 11:00:23\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{baseUrl}}/hit",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "hit"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Добавление посещения эндпоинта - Не указаны дата и время посещения",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 400\", function () {",
+              "    pm.expect(pm.response.code).to.be.oneOf([400]);",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"app\": \"ewm-main-service\",\n  \"uri\": \"/events/2\",\n  \"ip\": \"192.163.0.1\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{baseUrl}}/hit",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "hit"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Добавление посещения эндпоинта /events/1",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Successful POST request\", function () {",
+              "    pm.expect(pm.response.code).to.be.oneOf([201, 202]);",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"app\": \"ewm-main-service\",\n  \"uri\": \"/events/1\",\n  \"ip\": \"192.163.0.1\",\n  \"timestamp\": \"2022-09-06 11:00:23\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{baseUrl}}/hit",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "hit"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Добавление посещения эндпоинта /events/1 с другого IP",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Successful POST request\", function () {",
+              "    pm.expect(pm.response.code).to.be.oneOf([201, 202]);",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"app\": \"ewm-main-service\",\n  \"uri\": \"/events/1\",\n  \"ip\": \"192.163.0.2\",\n  \"timestamp\": \"2022-09-06 11:10:23\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{baseUrl}}/hit",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "hit"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Добавление посещения эндпоинта /events/2",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Successful POST request\", function () {",
+              "    pm.expect(pm.response.code).to.be.oneOf([201, 202]);",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"app\": \"ewm-main-service\",\n  \"uri\": \"/events/2\",\n  \"ip\": \"192.163.0.1\",\n  \"timestamp\": \"2022-09-06 11:15:23\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{baseUrl}}/hit",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "hit"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Добавление посещения эндпоинта /events/2 c такого-же IP",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Successful POST request\", function () {",
+              "    pm.expect(pm.response.code).to.be.oneOf([201, 202]);",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"app\": \"ewm-main-service\",\n  \"uri\": \"/events/2\",\n  \"ip\": \"192.163.0.1\",\n  \"timestamp\": \"2022-09-06 11:15:23\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{baseUrl}}/hit",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "hit"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Получить все посещения для эндпоинта /events/1 - Дата начала позже даты конца",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 400\", function () {",
+              "    pm.expect(pm.response.code).to.be.oneOf([400]);",
+              "});",
+              ""
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/stats?uris=/events/1&start=2022-10-06 10:00:23&end=2022-09-06 12:00:23",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "stats"
+          ],
+          "query": [
+            {
+              "key": "uris",
+              "value": "/events/1"
+            },
+            {
+              "key": "start",
+              "value": "2022-10-06 10:00:23"
+            },
+            {
+              "key": "end",
+              "value": "2022-09-06 12:00:23"
+            },
+            {
+              "key": "unique",
+              "value": "true",
+              "disabled": true
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Получить все посещения для эндпоинта /events/1",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Successful GET request\", function () {",
+              "    pm.expect(pm.response.code).to.be.oneOf([200]);",
+              "});",
+              "",
+              "const body = pm.response.json();",
+              "",
+              "pm.test(\"Has body containing array\", function () {",
+              "    pm.response.to.be.withBody;",
+              "    pm.response.to.be.json;",
+              "    pm.expect(body).is.an('array');",
+              "});",
+              "",
+              "pm.test(\"Has body containing array of length 1\", function () {",
+              "    pm.expect(body.length).to.be.eq(1);",
+              "});",
+              "",
+              "pm.test(\"Test stats[0] 'app' field\", function() {",
+              "    pm.expect(body[0]).to.have.property('app');",
+              "    pm.expect(body[0].app, '\"app\" must be ewm-main-service').to.eql('ewm-main-service');",
+              "});",
+              "",
+              "pm.test(\"Test stats[0] 'uri' field\", function() {",
+              "    pm.expect(body[0]).to.have.property('uri');",
+              "    pm.expect(body[0].uri, '\"uri\" must be /events/1').to.eql('/events/1');",
+              "});",
+              "",
+              "pm.test(\"Test stats[0] 'hits' field\", function() {",
+              "    pm.expect(body[0]).to.have.property('hits'); ",
+              "    pm.expect(body[0].hits, '\"hits\" must be 1').to.eql(2);});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/stats?uris=/events/1&start=2022-09-06 10:00:23&end=2022-09-06 12:00:23",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "stats"
+          ],
+          "query": [
+            {
+              "key": "uris",
+              "value": "/events/1"
+            },
+            {
+              "key": "start",
+              "value": "2022-09-06 10:00:23"
+            },
+            {
+              "key": "end",
+              "value": "2022-09-06 12:00:23"
+            },
+            {
+              "key": "unique",
+              "value": "true",
+              "disabled": true
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Получить все уникальные посещения для эндпоинта /events/1",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Successful GET request\", function () {",
+              "    pm.expect(pm.response.code).to.be.oneOf([200]);",
+              "});",
+              "",
+              "const body = pm.response.json();",
+              "",
+              "pm.test(\"Has body containing array\", function () {",
+              "    pm.response.to.be.withBody;",
+              "    pm.response.to.be.json;",
+              "    pm.expect(body).is.an('array');",
+              "});",
+              "",
+              "pm.test(\"Has body containing array of length 1\", function () {",
+              "    pm.expect(body.length).to.be.eq(1);",
+              "});",
+              "",
+              "pm.test(\"Test stats[0] 'app' field\", function() {",
+              "    pm.expect(body[0]).to.have.property('app');",
+              "    pm.expect(body[0].app, '\"app\" must be ewm-main-service').to.eql('ewm-main-service');",
+              "});",
+              "",
+              "pm.test(\"Test stats[0] 'uri' field\", function() {",
+              "    pm.expect(body[0]).to.have.property('uri');",
+              "    pm.expect(body[0].uri, '\"uri\" must be /events/1').to.eql('/events/1');",
+              "});",
+              "",
+              "pm.test(\"Test stats[0] 'hits' field\", function() {",
+              "    pm.expect(body[0]).to.have.property('hits'); ",
+              "    pm.expect(body[0].hits, '\"hits\" must be 1').to.eql(2);});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/stats?uris=/events/1&start=2022-09-06 10:00:23&end=2022-09-06 12:00:23&unique=true",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "stats"
+          ],
+          "query": [
+            {
+              "key": "uris",
+              "value": "/events/1"
+            },
+            {
+              "key": "start",
+              "value": "2022-09-06 10:00:23"
+            },
+            {
+              "key": "end",
+              "value": "2022-09-06 12:00:23"
+            },
+            {
+              "key": "unique",
+              "value": "true"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Получить все посещения для эндпоинта /events/2",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Successful GET request\", function () {",
+              "    pm.expect(pm.response.code).to.be.oneOf([200]);",
+              "});",
+              "",
+              "const body = pm.response.json();",
+              "",
+              "pm.test(\"Has body containing array\", function () {",
+              "    pm.response.to.be.withBody;",
+              "    pm.response.to.be.json;",
+              "    pm.expect(body).is.an('array');",
+              "});",
+              "",
+              "pm.test(\"Has body containing array of length 1\", function () {",
+              "    pm.expect(body.length).to.be.eq(1);",
+              "});",
+              "",
+              "pm.test(\"Test stats[0] 'app' field\", function() {",
+              "    pm.expect(body[0]).to.have.property('app');",
+              "    pm.expect(body[0].app, '\"app\" must be ewm-main-service').to.eql('ewm-main-service');",
+              "});",
+              "",
+              "pm.test(\"Test stats[0] 'uri' field\", function() {",
+              "    pm.expect(body[0]).to.have.property('uri');",
+              "    pm.expect(body[0].uri, '\"uri\" must be /events/2').to.eql('/events/2');",
+              "});",
+              "",
+              "pm.test(\"Test stats[0] 'hits' field\", function() {",
+              "    pm.expect(body[0]).to.have.property('hits'); ",
+              "    pm.expect(body[0].hits, '\"hits\" must be 1').to.eql(2);});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/stats?uris=/events/2&start=2022-09-06 10:00:23&end=2022-09-06 12:00:23",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "stats"
+          ],
+          "query": [
+            {
+              "key": "uris",
+              "value": "/events/2"
+            },
+            {
+              "key": "start",
+              "value": "2022-09-06 10:00:23"
+            },
+            {
+              "key": "end",
+              "value": "2022-09-06 12:00:23"
+            },
+            {
+              "key": "unique",
+              "value": "true",
+              "disabled": true
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Получить все уникальные посещения для эндпоинта /events/2",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Successful GET request\", function () {",
+              "    pm.expect(pm.response.code).to.be.oneOf([200]);",
+              "});",
+              "",
+              "const body = pm.response.json();",
+              "",
+              "pm.test(\"Has body containing array\", function () {",
+              "    pm.response.to.be.withBody;",
+              "    pm.response.to.be.json;",
+              "    pm.expect(body).is.an('array');",
+              "});",
+              "",
+              "pm.test(\"Has body containing array of length 1\", function () {",
+              "    pm.expect(body.length).to.be.eq(1);",
+              "});",
+              "",
+              "pm.test(\"Test stats[0] 'app' field\", function() {",
+              "    pm.expect(body[0]).to.have.property('app');",
+              "    pm.expect(body[0].app, '\"app\" must be ewm-main-service').to.eql('ewm-main-service');",
+              "});",
+              "",
+              "pm.test(\"Test stats[0] 'uri' field\", function() {",
+              "    pm.expect(body[0]).to.have.property('uri');",
+              "    pm.expect(body[0].uri, '\"uri\" must be /events/2').to.eql('/events/2');",
+              "});",
+              "",
+              "pm.test(\"Test stats[0] 'hits' field\", function() {",
+              "    pm.expect(body[0]).to.have.property('hits'); ",
+              "    pm.expect(body[0].hits, '\"hits\" must be 1').to.eql(1);});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/stats?uris=/events/2&start=2022-09-06 10:00:23&end=2022-09-06 12:00:23&unique=true",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "stats"
+          ],
+          "query": [
+            {
+              "key": "uris",
+              "value": "/events/2"
+            },
+            {
+              "key": "start",
+              "value": "2022-09-06 10:00:23"
+            },
+            {
+              "key": "end",
+              "value": "2022-09-06 12:00:23"
+            },
+            {
+              "key": "unique",
+              "value": "true"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Получить все посещения для эндпоинтов /events/1 и /events/2",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Successful GET request\", function () {",
+              "    pm.expect(pm.response.code).to.be.oneOf([200]);",
+              "});",
+              "",
+              "const body = pm.response.json();",
+              "",
+              "pm.test(\"Has body containing array\", function () {",
+              "    pm.response.to.be.withBody;",
+              "    pm.response.to.be.json;",
+              "    pm.expect(body).is.an('array');",
+              "});",
+              "",
+              "pm.test(\"Has body containing array of length 1\", function () {",
+              "    pm.expect(body.length).to.be.eq(2);",
+              "});",
+              "",
+              "pm.test(\"Test stats[0] 'app' field\", function() {",
+              "    pm.expect(body[0]).to.have.property('app');",
+              "    pm.expect(body[0].app, '\"app\" must be ewm-main-service').to.eql('ewm-main-service');",
+              "});",
+              "",
+              "pm.test(\"Test stats[0] 'uri' field\", function() {",
+              "    pm.expect(body[0]).to.have.property('uri');",
+              "    pm.expect(body[0].uri, '\"uri\" must be /events/1').to.eql('/events/1');",
+              "});",
+              "",
+              "pm.test(\"Test stats[0] 'hits' field\", function() {",
+              "    pm.expect(body[0]).to.have.property('hits'); ",
+              "    pm.expect(body[0].hits, '\"hits\" must be 1').to.eql(2);});",
+              "",
+              "pm.test(\"Test stats[1] 'app' field\", function() {",
+              "    pm.expect(body[1]).to.have.property('app');",
+              "    pm.expect(body[1].app, '\"app\" must be ewm-main-service').to.eql('ewm-main-service');",
+              "});",
+              "",
+              "pm.test(\"Test stats[1] 'uri' field\", function() {",
+              "    pm.expect(body[1]).to.have.property('uri');",
+              "    pm.expect(body[1].uri, '\"uri\" must be /events/2').to.eql('/events/2');",
+              "});",
+              "",
+              "pm.test(\"Test stats[1] 'hits' field\", function() {",
+              "    pm.expect(body[1]).to.have.property('hits'); ",
+              "    pm.expect(body[1].hits, '\"hits\" must be 2').to.eql(2);});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/stats?uris=/events/1,/events/2&start=2022-09-06 10:00:23&end=2022-09-06 12:00:23",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "stats"
+          ],
+          "query": [
+            {
+              "key": "uris",
+              "value": "/events/1,/events/2"
+            },
+            {
+              "key": "start",
+              "value": "2022-09-06 10:00:23"
+            },
+            {
+              "key": "end",
+              "value": "2022-09-06 12:00:23"
+            },
+            {
+              "key": "unique",
+              "value": "true",
+              "disabled": true
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Получить все уникальные посещения для всех эндпоинтов",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Successful GET request\", function () {",
+              "    pm.expect(pm.response.code).to.be.oneOf([200]);",
+              "});",
+              "",
+              "const body = pm.response.json();",
+              "",
+              "pm.test(\"Has body containing array\", function () {",
+              "    pm.response.to.be.withBody;",
+              "    pm.response.to.be.json;",
+              "    pm.expect(body).is.an('array');",
+              "});",
+              "",
+              "pm.test(\"Has body containing array of length 1\", function () {",
+              "    pm.expect(body.length).to.be.eq(2);",
+              "});",
+              "",
+              "pm.test(\"Test stats[0] 'app' field\", function() {",
+              "    pm.expect(body[0]).to.have.property('app');",
+              "    pm.expect(body[0].app, '\"app\" must be ewm-main-service').to.eql('ewm-main-service');",
+              "});",
+              "",
+              "pm.test(\"Test stats[0] 'uri' field\", function() {",
+              "    pm.expect(body[0]).to.have.property('uri');",
+              "    pm.expect(body[0].uri, '\"uri\" must be /events/1').to.eql('/events/1');",
+              "});",
+              "",
+              "pm.test(\"Test stats[0] 'hits' field\", function() {",
+              "    pm.expect(body[0]).to.have.property('hits'); ",
+              "    pm.expect(body[0].hits, '\"hits\" must be 1').to.eql(2);});",
+              "",
+              "pm.test(\"Test stats[1] 'app' field\", function() {",
+              "    pm.expect(body[1]).to.have.property('app');",
+              "    pm.expect(body[1].app, '\"app\" must be ewm-main-service').to.eql('ewm-main-service');",
+              "});",
+              "",
+              "pm.test(\"Test stats[1] 'uri' field\", function() {",
+              "    pm.expect(body[1]).to.have.property('uri');",
+              "    pm.expect(body[1].uri, '\"uri\" must be /events/2').to.eql('/events/2');",
+              "});",
+              "",
+              "pm.test(\"Test stats[1] 'hits' field\", function() {",
+              "    pm.expect(body[1]).to.have.property('hits'); ",
+              "    pm.expect(body[1].hits, '\"hits\" must be 2').to.eql(1);});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/stats?start=2022-09-06 10:00:23&end=2022-09-06 12:00:23&unique=true",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "stats"
+          ],
+          "query": [
+            {
+              "key": "uris",
+              "value": "/events/1,/events/2",
+              "disabled": true
+            },
+            {
+              "key": "start",
+              "value": "2022-09-06 10:00:23"
+            },
+            {
+              "key": "end",
+              "value": "2022-09-06 12:00:23"
+            },
+            {
+              "key": "unique",
+              "value": "true"
+            }
+          ]
+        }
+      },
+      "response": []
+    }
+  ],
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "exec": [
+          ""
+        ]
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "exec": [
+          ""
+        ]
+      }
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:8080",
+      "type": "string"
+    },
+    {
+      "key": "serverUrl",
+      "value": "http://localhost:9090",
+      "type": "string"
+    }
+  ]
 }
