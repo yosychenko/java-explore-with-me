@@ -29,4 +29,5 @@ public class EventShortDto {
     @NotBlank(message = "Название события не должно быть пустым.")
     private String title;
     private long views;
+    private boolean usersCanComment;
 }

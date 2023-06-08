@@ -27,7 +27,7 @@ public class ExceptionControllerAdvice {
         return errors;
     }
 
-    @ExceptionHandler({IncorrectEventDate.class, IncorrectDateRange.class})
+    @ExceptionHandler({IncorrectEventDateException.class, IncorrectDateRangeException.class})
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public Map<String, String> handleBadRequest(RuntimeException ex) {
         return Map.of(EXCEPTION_MESSAGE_FIELD, ex.getMessage());
@@ -36,9 +36,13 @@ public class ExceptionControllerAdvice {
     @ExceptionHandler({
             DuplicateEntityException.class,
             EventsOfDeletedCategoryExistException.class,
-            IncorrectEventStateAction.class,
+            IncorrectEventStateActionException.class,
             UserCannotParticipateInEventException.class,
-            UserCannotChangeRequestStatusException.class
+            UserCannotChangeRequestStatusException.class,
+            IncorrectCommentStateActionException.class,
+            UserCannotLeaveCommentException.class,
+            UserCannotDeleteCommentException.class,
+            UserCannotUpdateCommentException.class
     })
     @ResponseStatus(HttpStatus.CONFLICT)
     public Map<String, String> handleConflictExceptions(RuntimeException ex) {

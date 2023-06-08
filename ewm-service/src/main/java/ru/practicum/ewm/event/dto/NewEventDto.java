@@ -35,4 +35,5 @@ public class NewEventDto {
     @NotBlank(message = "Название события не должно быть пустым.")
     @Size(min = 3, max = 120, message = "Название события должно быть длиной от 20 до 120 символов.")
     private String title;
+    private boolean usersCanComment = true;
 }

@@ -31,4 +31,5 @@ public class UpdateEventAdminRequest {
     private EventStateAction stateAction;
     @Size(min = 3, max = 120, message = "Название события должно быть длиной от 20 до 120 символов.")
     private String title;
+    private Boolean usersCanComment;
 }

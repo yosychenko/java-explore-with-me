@@ -32,6 +32,7 @@ public class EventMapper {
                 .title(event.getTitle())
                 .views(event.getViews())
                 .confirmedRequests(event.getConfirmedRequests())
+                .usersCanComment(event.isUsersCanComment())
                 .build();
     }
 
@@ -63,6 +64,7 @@ public class EventMapper {
                 .title(event.getTitle())
                 .views(event.getViews())
                 .confirmedRequests(event.getConfirmedRequests())
+                .usersCanComment(event.isUsersCanComment())
                 .build();
     }
 
@@ -75,6 +77,7 @@ public class EventMapper {
         event.setInitiator(UserMapper.fromUserShortDto(eventShortDto.getInitiator()));
         event.setPaid(eventShortDto.isPaid());
         event.setTitle(eventShortDto.getTitle());
+        event.setUsersCanComment(eventShortDto.isUsersCanComment());
         return event;
     }
 
@@ -94,6 +97,7 @@ public class EventMapper {
         event.setRequestModeration(eventFullDto.isRequestModeration());
         event.setState(eventFullDto.getState());
         event.setTitle(eventFullDto.getTitle());
+        event.setUsersCanComment(eventFullDto.isUsersCanComment());
         return event;
     }
 
@@ -108,6 +112,7 @@ public class EventMapper {
         event.setParticipantLimit(newEventDto.getParticipantLimit());
         event.setRequestModeration(newEventDto.isRequestModeration());
         event.setTitle(newEventDto.getTitle());
+        event.setUsersCanComment(newEventDto.isUsersCanComment());
         return event;
     }
 }
