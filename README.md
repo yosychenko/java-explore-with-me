@@ -26,6 +26,7 @@
 - [Спецификация API сервиса статистики](./ewm-stats-service-spec.json)
 
 ## Дополнительная функциональность - Комментарии
+[Ссылка на пул-реквест](https://github.com/yosychenko/java-explore-with-me/pull/5)
 
 **Admin**
 * `[GET] /admin/comments?users={users}&events={events}&commentStates={commentStates}&rangeStart={rangeStart}&rangeEnd={rangeEnd}&from={from}&size={size}` – получить список всех комментариев с пагинацией;
