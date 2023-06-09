@@ -19,8 +19,8 @@ import ru.practicum.ewm.event.storage.EventFilterParams;
 import ru.practicum.ewm.event.storage.EventFilterSpecifications;
 import ru.practicum.ewm.event.storage.EventStorage;
 import ru.practicum.ewm.exception.EntityNotFoundException;
-import ru.practicum.ewm.exception.IncorrectEventDate;
-import ru.practicum.ewm.exception.IncorrectEventStateAction;
+import ru.practicum.ewm.exception.IncorrectEventDateException;
+import ru.practicum.ewm.exception.IncorrectEventStateActionException;
 import ru.practicum.ewm.stats.service.StatsService;
 import ru.practicum.ewm.user.mapper.UserMapper;
 import ru.practicum.ewm.user.model.User;
@@ -74,17 +74,17 @@ public class EventServiceImpl implements EventService {
         if (updateEventAdminRequest.getStateAction() != null) {
             if (updateEventAdminRequest.getStateAction().equals(EventStateAction.PUBLISH_EVENT) &&
                     !eventToUpdate.getState().equals(EventState.PENDING)) {
-                throw new IncorrectEventStateAction("Событие можно публиковать, только если оно в состоянии ожидания публикации.");
+                throw new IncorrectEventStateActionException("Событие можно публиковать, только если оно в состоянии ожидания публикации.");
             }
 
             if (updateEventAdminRequest.getStateAction().equals(EventStateAction.PUBLISH_EVENT) &&
                     ChronoUnit.HOURS.between(publishedOn, eventToUpdate.getEventDate()) < 1) {
-                throw new IncorrectEventDate("Дата начала изменяемого события должна быть не ранее чем за час от даты публикации");
+                throw new IncorrectEventDateException("Дата начала изменяемого события должна быть не ранее чем за час от даты публикации");
             }
 
             if (updateEventAdminRequest.getStateAction().equals(EventStateAction.REJECT_EVENT) &&
                     eventToUpdate.getState().equals(EventState.PUBLISHED)) {
-                throw new IncorrectEventStateAction("Событие можно отклонить, только если оно еще не опубликовано.");
+                throw new IncorrectEventStateActionException("Событие можно отклонить, только если оно еще не опубликовано.");
             }
 
             if (updateEventAdminRequest.getStateAction().equals(EventStateAction.PUBLISH_EVENT)) {
@@ -111,7 +111,8 @@ public class EventServiceImpl implements EventService {
                 updateEventAdminRequest.getPaid(),
                 updateEventAdminRequest.getParticipantLimit(),
                 updateEventAdminRequest.getRequestModeration(),
-                updateEventAdminRequest.getTitle()
+                updateEventAdminRequest.getTitle(),
+                updateEventAdminRequest.getUsersCanComment()
         );
 
     }
@@ -183,7 +184,7 @@ public class EventServiceImpl implements EventService {
     @Transactional
     public EventFullDto addUserEvent(long userId, NewEventDto newEventDto) {
         if (ChronoUnit.HOURS.between(LocalDateTime.now(), newEventDto.getEventDate()) < 2) {
-            throw new IncorrectEventDate("Дата и время на которые намечено событие не может быть раньше, чем через два часа от текущего момента.");
+            throw new IncorrectEventDateException("Дата и время на которые намечено событие не может быть раньше, чем через два часа от текущего момента.");
         }
 
         User initiator = UserMapper.fromUserDto(userService.getUserById(userId));
@@ -212,7 +213,7 @@ public class EventServiceImpl implements EventService {
         Event eventToUpdate = EventMapper.fromEventFullDto(getUserEventById(userId, eventId));
 
         if (eventToUpdate.getState().equals(EventState.PUBLISHED)) {
-            throw new IncorrectEventStateAction("Изменить можно только отмененные события или события в состоянии ожидания модерации");
+            throw new IncorrectEventStateActionException("Изменить можно только отмененные события или события в состоянии ожидания модерации");
         }
 
         if (updateEventUserRequest.getStateAction() != null) {
@@ -241,7 +242,8 @@ public class EventServiceImpl implements EventService {
                 updateEventUserRequest.getPaid(),
                 updateEventUserRequest.getParticipantLimit(),
                 updateEventUserRequest.getRequestModeration(),
-                updateEventUserRequest.getTitle()
+                updateEventUserRequest.getTitle(),
+                updateEventUserRequest.getUsersCanComment()
         );
     }
 
@@ -269,7 +271,8 @@ public class EventServiceImpl implements EventService {
             Boolean paid,
             Integer participantLimit,
             Boolean requestModeration,
-            String title
+            String title,
+            Boolean userCanComment
     ) {
         if (annotation != null) {
             eventToUpdate.setAnnotation(annotation);
@@ -285,7 +288,7 @@ public class EventServiceImpl implements EventService {
 
         if (eventDate != null) {
             if (ChronoUnit.HOURS.between(LocalDateTime.now(), eventDate) < 2) {
-                throw new IncorrectEventDate("Дата и время на которые намечено событие не может быть раньше, чем через два часа от текущего момента.");
+                throw new IncorrectEventDateException("Дата и время на которые намечено событие не может быть раньше, чем через два часа от текущего момента.");
             }
             eventToUpdate.setEventDate(eventDate);
         }
@@ -308,6 +311,10 @@ public class EventServiceImpl implements EventService {
 
         if (title != null) {
             eventToUpdate.setTitle(title);
+        }
+
+        if (userCanComment != null) {
+            eventToUpdate.setUsersCanComment(userCanComment);
         }
 
         return EventMapper.toEventFullDto(eventStorage.save(eventToUpdate));
