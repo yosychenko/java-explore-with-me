@@ -2681,7 +2681,7 @@
 											"",
 											"pm.test(\"Test comments 'comment.text' field\", function() {",
 											"    pm.expect(body).to.have.property('text');",
-											"    pm.expect(body.text, 'text must be ' +  pm.collectionVariables.get(\"ctext\")).to.eql(parseInt(pm.collectionVariables.get(\"ctext\")));",
+											"    pm.expect(body.text, 'text must be ' +  pm.collectionVariables.get(\"ctext\")).to.eql(pm.collectionVariables.get(\"ctext\"));",
 											"});",
 											"",
 											"pm.test(\"Test comments 'event' field\", function() {",
