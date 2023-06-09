@@ -41,10 +41,11 @@ public class UserCommentsController {
 
     @PatchMapping("/{userId}/comments/rejected/{commentId}")
     public CommentFullDto updateRejectedComment(
+            @PathVariable long userId,
             @PathVariable long commentId,
             @Valid @RequestBody UpdateRejectedCommentUserRequest updateRejectedCommentUserRequest
     ) {
-        return commentService.updateRejectedComment(commentId, updateRejectedCommentUserRequest);
+        return commentService.updateRejectedComment(userId, commentId, updateRejectedCommentUserRequest);
     }
 
     @PostMapping("/{userId}/comments")

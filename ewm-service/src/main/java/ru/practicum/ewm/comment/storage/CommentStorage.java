@@ -12,17 +12,19 @@ import java.util.List;
 import java.util.Optional;
 
 public interface CommentStorage extends JpaRepository<Comment, Long>, JpaSpecificationExecutor<Comment> {
-    List<Comment> findCommentByState(CommentState commentState, Pageable pageable);
+    Optional<Comment> findCommentByIdAndState(long commentId, CommentState state);
 
-    List<Comment> findCommentByEventAndState(Event event, CommentState commentState, Pageable pageable);
+    List<Comment> findCommentByStateOrderByCreatedOnDesc(CommentState commentState, Pageable pageable);
 
-    List<Comment> findCommentByAuthorAndState(User author, CommentState commentState);
+    List<Comment> findCommentByEventAndStateOrderByCreatedOnDesc(Event event, CommentState commentState, Pageable pageable);
 
-    List<Comment> findCommentsByAuthor(User author);
+    List<Comment> findCommentByAuthorAndStateOrderByCreatedOnDesc(User author, CommentState commentState);
 
-    Optional<Comment> findCommentByAuthor(User author);
+    List<Comment> findCommentsByAuthorOrderByCreatedOnDesc(User author);
 
-    List<Comment> findCommentsByAuthorAndEvent(User author, Event event, Pageable pageable);
+    Optional<Comment> findCommentByIdAndAuthor(long commentId, User author);
+
+    List<Comment> findCommentsByAuthorAndEventOrderByCreatedOnDesc(User author, Event event, Pageable pageable);
 
 
 }

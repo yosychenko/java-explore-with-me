@@ -44,24 +44,24 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     public List<CommentFullDto> getAllCommentsToReview(Pageable pageable) {
-        return commentStorage.findCommentByState(CommentState.NEEDS_MODERATION, pageable).stream()
+        return commentStorage.findCommentByStateOrderByCreatedOnDesc(CommentState.NEEDS_MODERATION, pageable).stream()
                 .map(CommentMapper::toCommentFullDto)
                 .collect(Collectors.toList());
     }
 
     @Override
     public void deleteComment(long commentId) {
-        Comment commentToDelete = CommentMapper.fromCommentShortDto(getCommentById(commentId));
+        Comment commentToDelete = CommentMapper.fromCommentFullDto(getCommentById(commentId));
         commentStorage.delete(commentToDelete);
     }
 
     @Override
     public CommentFullDto updateCommentState(long commentId, UpdateCommentAdminRequest updateCommentAdminRequest) {
-        Comment commentToUpdate = CommentMapper.fromCommentShortDto(getCommentById(commentId));
+        Comment commentToUpdate = CommentMapper.fromCommentFullDto(getCommentById(commentId));
         CommentStateAction action = updateCommentAdminRequest.getCommentStateAction();
         CommentState existingCommentState = commentToUpdate.getState();
 
-        if (action.equals(CommentStateAction.PUBLISH_COMMENT) && !existingCommentState.equals(CommentState.PENDING)) {
+        if (action.equals(CommentStateAction.PUBLISH_COMMENT) && !existingCommentState.equals(CommentState.NEEDS_MODERATION)) {
             throw new IncorrectCommentStateActionException("Комментарий можно публиковать, только если он в состоянии ожидания публикации.");
         }
 
@@ -86,8 +86,18 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
-    public CommentShortDto getCommentById(long commentId) {
+    public CommentFullDto getCommentById(long commentId) {
         Optional<Comment> comment = commentStorage.findById(commentId);
+        if (comment.isPresent()) {
+            return CommentMapper.toCommentFullDto(comment.get());
+        } else {
+            throw new EntityNotFoundException(String.format("Комментарий c ID=%s не найден.", commentId));
+        }
+    }
+
+    @Override
+    public CommentShortDto getPublishedCommentById(long commentId) {
+        Optional<Comment> comment = commentStorage.findCommentByIdAndState(commentId, CommentState.PUBLISHED);
         if (comment.isPresent()) {
             return CommentMapper.toCommentShortDto(comment.get());
         } else {
@@ -100,7 +110,7 @@ public class CommentServiceImpl implements CommentService {
     public List<CommentShortDto> getAllEventComments(long eventId, Pageable pageable) {
         Event event = EventMapper.fromEventFullDto(eventService.getEventById(eventId));
 
-        return commentStorage.findCommentByEventAndState(event, CommentState.PUBLISHED, pageable)
+        return commentStorage.findCommentByEventAndStateOrderByCreatedOnDesc(event, CommentState.PUBLISHED, pageable)
                 .stream()
                 .map(CommentMapper::toCommentShortDto)
                 .collect(Collectors.toList());
@@ -111,7 +121,7 @@ public class CommentServiceImpl implements CommentService {
         User author = UserMapper.fromUserDto(userService.getUserById(userId));
         Event event = EventMapper.fromEventFullDto(eventService.getEventById(eventId));
 
-        return commentStorage.findCommentsByAuthorAndEvent(author, event, pageable).stream()
+        return commentStorage.findCommentsByAuthorAndEventOrderByCreatedOnDesc(author, event, pageable).stream()
                 .map(CommentMapper::toCommentFullDto)
                 .collect(Collectors.toList());
     }
@@ -120,7 +130,7 @@ public class CommentServiceImpl implements CommentService {
     public List<CommentFullDto> getAllUserComments(long userId) {
         User author = UserMapper.fromUserDto(userService.getUserById(userId));
 
-        return commentStorage.findCommentsByAuthor(author).stream()
+        return commentStorage.findCommentsByAuthorOrderByCreatedOnDesc(author).stream()
                 .map(CommentMapper::toCommentFullDto)
                 .collect(Collectors.toList());
     }
@@ -129,15 +139,20 @@ public class CommentServiceImpl implements CommentService {
     public List<CommentFullDto> getAllRejectedComments(long userId) {
         User author = UserMapper.fromUserDto(userService.getUserById(userId));
 
-        return commentStorage.findCommentByAuthorAndState(author, CommentState.REJECTED).stream()
+        return commentStorage.findCommentByAuthorAndStateOrderByCreatedOnDesc(author, CommentState.REJECTED).stream()
                 .map(CommentMapper::toCommentFullDto)
                 .collect(Collectors.toList());
     }
 
     @Override
-    public CommentFullDto updateRejectedComment(long commentId, UpdateRejectedCommentUserRequest updateRejectedCommentUserRequest) {
-        Comment commentToUpdate = CommentMapper.fromCommentShortDto(getCommentById(commentId));
+    public CommentFullDto updateRejectedComment(long userId, long commentId, UpdateRejectedCommentUserRequest updateRejectedCommentUserRequest) {
+        User author = UserMapper.fromUserDto(userService.getUserById(userId));
+        Comment commentToUpdate = CommentMapper.fromCommentFullDto(getCommentById(commentId));
         CommentStateAction action = updateRejectedCommentUserRequest.getCommentStateAction();
+
+        if (!commentToUpdate.getAuthor().equals(author)) {
+            throw new UserCannotUpdateCommentException("Невозможно изменить чужой комментарий.");
+        }
 
         if (updateRejectedCommentUserRequest.getText().equalsIgnoreCase(commentToUpdate.getText())) {
             throw new UserCannotUpdateCommentException("Невозможно обновить статус комментария - " +
@@ -150,7 +165,7 @@ public class CommentServiceImpl implements CommentService {
         }
 
         if (action.equals(CommentStateAction.SEND_COMMENT_TO_MODERATION)) {
-            commentToUpdate.setState(CommentState.PENDING);
+            commentToUpdate.setState(CommentState.NEEDS_MODERATION);
         }
 
         commentToUpdate.setText(updateRejectedCommentUserRequest.getText());
@@ -178,7 +193,7 @@ public class CommentServiceImpl implements CommentService {
         if (!event.getRequestModeration()) {
             comment.setState(CommentState.PUBLISHED);
         } else {
-            comment.setState(CommentState.PENDING);
+            comment.setState(CommentState.NEEDS_MODERATION);
         }
 
         return CommentMapper.toCommentFullDto(commentStorage.save(comment));
@@ -187,7 +202,7 @@ public class CommentServiceImpl implements CommentService {
     @Override
     public CommentFullDto updateUserComment(long userId, long commentId, UpdateCommentUserRequest updateCommentUserRequest) {
         User author = UserMapper.fromUserDto(userService.getUserById(userId));
-        Comment commentToUpdate = CommentMapper.fromCommentShortDto(getCommentById(commentId));
+        Comment commentToUpdate = CommentMapper.fromCommentFullDto(getCommentById(commentId));
         Event commentedEvent = commentToUpdate.getEvent();
 
         if (!commentToUpdate.getState().equals(CommentState.PUBLISHED)) {
@@ -214,7 +229,7 @@ public class CommentServiceImpl implements CommentService {
     @Override
     public void deleteUserComment(long userId, long commentId) {
         User author = UserMapper.fromUserDto(userService.getUserById(userId));
-        Optional<Comment> comment = commentStorage.findCommentByAuthor(author);
+        Optional<Comment> comment = commentStorage.findCommentByIdAndAuthor(commentId, author);
 
         if (comment.isPresent()) {
             commentStorage.delete(comment.get());

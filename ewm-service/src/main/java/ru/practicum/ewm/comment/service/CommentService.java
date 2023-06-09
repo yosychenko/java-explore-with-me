@@ -16,7 +16,9 @@ public interface CommentService {
 
     CommentFullDto updateCommentState(long commentId, UpdateCommentAdminRequest updateCommentAdminRequest);
 
-    CommentShortDto getCommentById(long commentId);
+    CommentFullDto getCommentById(long commentId);
+
+    CommentShortDto getPublishedCommentById(long commentId);
 
     List<CommentShortDto> getAllEventComments(long eventId, Pageable pageable);
 
@@ -26,7 +28,7 @@ public interface CommentService {
 
     List<CommentFullDto> getAllRejectedComments(long userId);
 
-    CommentFullDto updateRejectedComment(long commentId, UpdateRejectedCommentUserRequest updateRejectedCommentUserRequest);
+    CommentFullDto updateRejectedComment(long userId, long commentId, UpdateRejectedCommentUserRequest updateRejectedCommentUserRequest);
 
     CommentFullDto addUserComment(long userId, long eventId, NewCommentDto newCommentDto);
 

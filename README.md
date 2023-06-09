@@ -8,6 +8,7 @@
 Приложение состоит из основного сервиса, основной БД, сервиса статистики просмотров, БД для статистики. Каждая часть
 поднимается в отдельном docker-контейнере.
 
+
 ## Стек:
 
 - Java 11 (Core, Collections, Optional, Stream)
@@ -19,10 +20,31 @@
 - Postman
 - Docker
 
-## Endpoints
+## Спецификация сервиса
 
 - [Спецификация API основного сервиса](./ewm-main-service-spec.json)
 - [Спецификация API сервиса статистики](./ewm-stats-service-spec.json)
+
+## Дополнительная функциональность - Комментарии
+
+**Admin**
+* `[GET] /admin/comments?users={users}&events={events}&commentStates={commentStates}&rangeStart={rangeStart}&rangeEnd={rangeEnd}&from={from}&size={size}` – получить список всех комментариев с пагинацией;
+* `[GET] /admin/comments/review?from={from}&size={size}` – получить список всех комментариев для ревью;
+* `[DELETE] /admin/comments/{commentId}` – удалить комментарий commentId;
+* `[PATCH] /admin/comments/{commentId}` - обновить статус комментария.
+
+**Private**
+* `[GET] /users/{userId}/comments?eventId={eventId}&from={from}&size={size}` - получить список всех комментариев пользователя userId к событию eventId с пагинацией;
+* `[GET] /users/{userId}/comments` - получить список всех комментариев пользователя;
+* `[GET] /users/{userId}/comments/rejected` - получить все отклоненные модератором комментарии;
+* `[PATCH] /users/{userId}/comments/rejected/{commentId}` - обновить отклоненный модератором комментарий;
+* `[POST] /users/{userId}/comments?eventId={eventId}` – создать новый комментарий к событию eventId пользователем userId;
+* `[PATCH] /users/{userId}/comments/{commentId}` – обновить свой комментарий commentId пользователем userId;
+* `[DELETE] /users/{userId}/comments/{commentId}` - удалить свой комментарий commentId пользователем userId.
+
+**Public**
+* `[GET] /comments?eventId={eventId}&from={from}&size={size}` – получить список всех комментариев к событию eventId с пагинацией;
+* `[GET] /comments/{commentId}` – получить комментарий commentId.
 
 ## ER-диаграмма основного сервиса
 

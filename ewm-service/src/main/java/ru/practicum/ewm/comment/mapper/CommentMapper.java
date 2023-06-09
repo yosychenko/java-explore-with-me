@@ -31,14 +31,15 @@ public class CommentMapper {
                 .build();
     }
 
-    public static Comment fromCommentShortDto(CommentShortDto commentShortDto) {
+    public static Comment fromCommentFullDto(CommentFullDto commentFullDto) {
         Comment comment = new Comment();
-        comment.setId(commentShortDto.getId());
-        comment.setText(commentShortDto.getText());
-        comment.setAuthor(UserMapper.fromUserShortDto(commentShortDto.getAuthor()));
-        comment.setEvent(EventMapper.fromEventShortDto(commentShortDto.getEvent()));
-        comment.setUpdatedOn(commentShortDto.getUpdatedOn());
-        comment.setCreatedOn(commentShortDto.getCreatedOn());
+        comment.setId(commentFullDto.getId());
+        comment.setText(commentFullDto.getText());
+        comment.setAuthor(UserMapper.fromUserDto(commentFullDto.getAuthor()));
+        comment.setEvent(EventMapper.fromEventFullDto(commentFullDto.getEvent()));
+        comment.setState(commentFullDto.getState());
+        comment.setUpdatedOn(commentFullDto.getUpdatedOn());
+        comment.setCreatedOn(commentFullDto.getCreatedOn());
         return comment;
     }
 
